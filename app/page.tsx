@@ -11,6 +11,10 @@ export default function Home() {
   const [savedMascots, setSavedMascots] = useState<MascotData[]>([])
   const [activeTab, setActiveTab] = useState<'ai-image' | 'saved'>('ai-image')
 
+  const handleGenerate = () => {
+    console.log('AI mascot generation triggered')
+  }
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -20,11 +24,7 @@ export default function Home() {
           {/* Left Panel - AI Image Generator (Main Content) */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl p-6 candle-shadow">
-              <AIImageGenerator
-                onMascotGenerated={(imageUrl, traits) => {
-                  console.log('Generated AI mascot:', imageUrl, traits)
-                }}
-              />
+              <AIImageGenerator onGenerate={handleGenerate} />
             </div>
           </div>
 
@@ -56,26 +56,26 @@ export default function Home() {
               </div>
             </div>
 
-                         {/* Tab Content */}
-             <div className="bg-white rounded-2xl p-6 candle-shadow">
-               {activeTab === 'ai-image' && (
-                 <div className="space-y-4">
-                   <BalanceDisplay />
-                   <div className="text-center text-gray-600">
-                     <p>AI Image Generator is now the main content area.</p>
-                     <p className="text-sm mt-2">Use the controls on the left to generate your mascot.</p>
-                   </div>
-                 </div>
-               )}
-               
-               {activeTab === 'saved' && (
-                 <SavedMascots
-                   savedMascots={savedMascots}
-                   onLoadMascot={() => {}}
-                   onDeleteMascot={(id) => setSavedMascots(prev => prev.filter(m => m.id !== id))}
-                 />
-               )}
-             </div>
+            {/* Tab Content */}
+            <div className="bg-white rounded-2xl p-6 candle-shadow">
+              {activeTab === 'ai-image' && (
+                <div className="space-y-4">
+                  <BalanceDisplay />
+                  <div className="text-center text-gray-600">
+                    <p>AI Image Generator is now the main content area.</p>
+                    <p className="text-sm mt-2">Use the controls on the left to generate your mascot.</p>
+                  </div>
+                </div>
+              )}
+              
+              {activeTab === 'saved' && (
+                <SavedMascots
+                  savedMascots={savedMascots}
+                  onLoadMascot={() => {}}
+                  onDeleteMascot={(id) => setSavedMascots(prev => prev.filter(m => m.id !== id))}
+                />
+              )}
+            </div>
           </div>
         </div>
       </main>
