@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { getSupabaseClient, isSupabaseConfigured } from '@/lib/supabase'
 
 export async function GET(
   request: NextRequest,
@@ -9,6 +9,18 @@ export async function GET(
     const { id } = params
     
     console.log('📝 Retrieving metadata for ID:', id)
+    
+    // Check if Supabase is configured
+    if (!isSupabaseConfigured()) {
+      console.log('❌ Supabase not configured')
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 503 }
+      )
+    }
+    
+    // Get Supabase client dynamically
+    const supabase = getSupabaseClient()
     
     // Retrieve metadata from Supabase
     const { data, error } = await supabase

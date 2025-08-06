@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { getSupabaseClient, isSupabaseConfigured } from '@/lib/supabase'
 
 export async function POST(request: NextRequest) {
   try {
@@ -8,6 +8,18 @@ export async function POST(request: NextRequest) {
     console.log('📝 Storing metadata in Supabase...')
     console.log('Name:', name)
     console.log('Metadata:', metadata)
+    
+    // Check if Supabase is configured
+    if (!isSupabaseConfigured()) {
+      console.log('❌ Supabase not configured')
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 503 }
+      )
+    }
+    
+    // Get Supabase client dynamically
+    const supabase = getSupabaseClient()
     
     // Create a unique ID for the metadata
     const metadataId = `${name}-${Date.now()}`
@@ -30,13 +42,13 @@ export async function POST(request: NextRequest) {
       throw new Error(`Failed to store metadata: ${error.message}`)
     }
     
-         // Create a URL that points to our metadata endpoint
-     // Use a public domain for production, fallback to localhost for development
-     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
-       (process.env.NODE_ENV === 'production' 
-         ? 'https://your-domain.com' 
-         : 'http://localhost:3000')
-     const metadataUrl = `${baseUrl}/api/get-metadata/${metadataId}`
+    // Create a URL that points to our metadata endpoint
+    // Use a public domain for production, fallback to localhost for development
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
+      (process.env.NODE_ENV === 'production' 
+        ? 'https://your-domain.com' 
+        : 'http://localhost:3000')
+    const metadataUrl = `${baseUrl}/api/get-metadata/${metadataId}`
     
     console.log('✅ Metadata stored successfully in Supabase')
     console.log('📁 Metadata URL:', metadataUrl)
@@ -66,6 +78,18 @@ export async function GET(request: NextRequest) {
     if (!metadataId) {
       return NextResponse.json({ error: 'Metadata ID required' }, { status: 400 })
     }
+    
+    // Check if Supabase is configured
+    if (!isSupabaseConfigured()) {
+      console.log('❌ Supabase not configured')
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 503 }
+      )
+    }
+    
+    // Get Supabase client dynamically
+    const supabase = getSupabaseClient()
     
     // Retrieve metadata from Supabase
     const { data, error } = await supabase
