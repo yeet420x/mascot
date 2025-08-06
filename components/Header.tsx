@@ -1,6 +1,7 @@
 'use client'
 
 import { Twitter, BarChart3, ExternalLink } from 'lucide-react'
+import WalletConnect from './WalletConnect'
 
 export default function Header() {
   return (
@@ -18,7 +19,7 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Social Links */}
+          {/* Social Links and Wallet */}
           <div className="flex items-center space-x-4">
             <a
               href="https://twitter.com/candletv"
@@ -49,6 +50,9 @@ export default function Header() {
               <ExternalLink size={20} />
               <span>Contract</span>
             </a>
+
+            {/* Wallet Connect Button */}
+            <WalletConnect />
           </div>
         </div>
       </div>

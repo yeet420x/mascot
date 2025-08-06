@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Header from '@/components/Header'
 import AIImageGenerator from '@/components/AIImageGenerator'
 import SavedMascots from '@/components/SavedMascots'
+import BalanceDisplay from '@/components/BalanceDisplay'
 import { MascotData } from '@/types/mascot'
 
 export default function Home() {
@@ -55,23 +56,26 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Tab Content */}
-            <div className="bg-white rounded-2xl p-6 candle-shadow">
-              {activeTab === 'ai-image' && (
-                <div className="text-center text-gray-600">
-                  <p>AI Image Generator is now the main content area.</p>
-                  <p className="text-sm mt-2">Use the controls on the left to generate your mascot.</p>
-                </div>
-              )}
-              
-              {activeTab === 'saved' && (
-                <SavedMascots
-                  savedMascots={savedMascots}
-                  onLoadMascot={() => {}}
-                  onDeleteMascot={(id) => setSavedMascots(prev => prev.filter(m => m.id !== id))}
-                />
-              )}
-            </div>
+                         {/* Tab Content */}
+             <div className="bg-white rounded-2xl p-6 candle-shadow">
+               {activeTab === 'ai-image' && (
+                 <div className="space-y-4">
+                   <BalanceDisplay />
+                   <div className="text-center text-gray-600">
+                     <p>AI Image Generator is now the main content area.</p>
+                     <p className="text-sm mt-2">Use the controls on the left to generate your mascot.</p>
+                   </div>
+                 </div>
+               )}
+               
+               {activeTab === 'saved' && (
+                 <SavedMascots
+                   savedMascots={savedMascots}
+                   onLoadMascot={() => {}}
+                   onDeleteMascot={(id) => setSavedMascots(prev => prev.filter(m => m.id !== id))}
+                 />
+               )}
+             </div>
           </div>
         </div>
       </main>

@@ -1,0 +1,218 @@
+const deleteTweets = async () => {
+    // Configuration
+    const SCROLL_PAUSE = 2000;  // Time to wait after scrolling
+    const DELETE_PAUSE = 1000;  // Time between deletions
+    const SCROLL_AMOUNT = 2000; // Pixels to scroll each time
+    const MAX_EMPTY_SCROLLS = 10; // Maximum empty scrolls before stopping
+    
+    // Stats tracking
+    let stats = {
+        deleted: 0,
+        failed: 0,
+        start: Date.now(),
+        totalProcessed: 0
+    };
+
+    // Helper to format time
+    const formatTime = (ms) => {
+        const seconds = Math.floor(ms / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        return `${hours}h ${minutes % 60}m ${seconds % 60}s`;
+    };
+
+    // Print stats
+    const logStats = () => {
+        const runtime = Date.now() - stats.start;
+        console.log(`
+🗑 Tweet Deletion Progress:
+━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Deleted: ${stats.deleted}
+❌ Failed: ${stats.failed}
+📊 Total Processed: ${stats.totalProcessed}
+⏱️ Runtime: ${formatTime(runtime)}
+━━━━━━━━━━━━━━━━━━━━━━━━
+        `);
+    };
+
+    // Sleep helper
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    // Enhanced scroll function
+    const scrollForMoreTweets = async () => {
+        const prevHeight = document.documentElement.scrollHeight;
+        const prevTweetCount = document.querySelectorAll('[aria-label="More"]').length;
+        
+        console.log(`📜 Scrolling for more tweets... (Current: ${prevTweetCount} tweets)`);
+        
+        // Scroll multiple times
+        for (let i = 0; i < 2; i++) {
+            window.scrollBy(0, SCROLL_AMOUNT);
+            await sleep(1000);
+        }
+        
+        await sleep(SCROLL_PAUSE);
+        
+        const newHeight = document.documentElement.scrollHeight;
+        const newTweetCount = document.querySelectorAll('[aria-label="More"]').length;
+        
+        console.log(`📊 Scroll result: Height ${prevHeight} → ${newHeight}, Tweets ${prevTweetCount} → ${newTweetCount}`);
+        
+        return {
+            hasMore: newHeight > prevHeight || newTweetCount > prevTweetCount,
+            newTweetCount
+        };
+    };
+
+    // Find all available more buttons
+    const findAllMoreButtons = () => {
+        const selectors = [
+            '[aria-label="More"]',
+            '[data-testid="more"]',
+            'div[role="button"][aria-label*="More"]',
+            'div[role="button"][aria-label*="more"]'
+        ];
+        
+        for (const selector of selectors) {
+            const buttons = document.querySelectorAll(selector);
+            if (buttons.length > 0) {
+                console.log(`🔍 Found ${buttons.length} more buttons using: ${selector}`);
+                return Array.from(buttons);
+            }
+        }
+        
+        return [];
+    };
+
+    // Process a single tweet
+    const processTweet = async (moreButton, tweetIndex) => {
+        try {
+            console.log(`🔄 Processing tweet ${tweetIndex + 1}...`);
+            
+            // Scroll tweet into view
+            moreButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            await sleep(500);
+            
+            // Click more button
+            moreButton.click();
+            await sleep(500);
+
+            // Find delete button
+            const deleteButton = Array.from(document.querySelectorAll('span, div')).find(element => 
+                element.textContent === 'Delete' || 
+                element.textContent === 'Delete Tweet' ||
+                element.getAttribute('data-testid') === 'delete'
+            );
+
+            if (deleteButton) {
+                console.log(`🗑️ Found delete button for tweet ${tweetIndex + 1}`);
+                deleteButton.click();
+                await sleep(500);
+
+                // Find confirmation button
+                const confirmButton = document.querySelector('[data-testid="confirmationSheetConfirm"], [data-testid="delete"]');
+                if (confirmButton) {
+                    confirmButton.click();
+                    stats.deleted++;
+                    console.log(`✅ Successfully deleted tweet ${tweetIndex + 1}`);
+                    await sleep(DELETE_PAUSE);
+                } else {
+                    console.log(`⚠️ No confirmation button found for tweet ${tweetIndex + 1}`);
+                    document.body.click(); // Close menu
+                }
+            } else {
+                console.log(`⚠️ No delete option found for tweet ${tweetIndex + 1}`);
+                document.body.click(); // Close menu
+            }
+            
+            stats.totalProcessed++;
+            
+        } catch (error) {
+            console.error(`❌ Error processing tweet ${tweetIndex + 1}:`, error);
+            stats.failed++;
+            document.body.click(); // Try to close any open menus
+        }
+    };
+
+    // Main continuous deletion loop
+    const deleteLoop = async () => {
+        let consecutiveEmptyScrolls = 0;
+        let totalTweetsProcessed = 0;
+        
+        try {
+            while (true) {
+                // Check for stop signal
+                if (window.stopDeletion) {
+                    console.log('🛑 Stop signal received!');
+                    break;
+                }
+                
+                // Find all available more buttons
+                const moreButtons = findAllMoreButtons();
+                
+                if (moreButtons.length === 0) {
+                    console.log('📜 No more buttons found, scrolling for more tweets...');
+                    const scrollResult = await scrollForMoreTweets();
+                    
+                    if (!scrollResult.hasMore) {
+                        consecutiveEmptyScrolls++;
+                        console.log(`⚠️ No new content loaded (attempt ${consecutiveEmptyScrolls}/${MAX_EMPTY_SCROLLS})`);
+                        
+                        if (consecutiveEmptyScrolls >= MAX_EMPTY_SCROLLS) {
+                            console.log('🏁 Reached maximum empty scrolls, finishing...');
+                            break;
+                        }
+                    } else {
+                        consecutiveEmptyScrolls = 0; // Reset counter
+                        console.log(`🎉 Found ${scrollResult.newTweetCount} new tweets!`);
+                    }
+                    continue;
+                }
+
+                // Reset empty scroll counter since we found tweets
+                consecutiveEmptyScrolls = 0;
+                
+                console.log(`🎯 Processing ${moreButtons.length} available tweets...`);
+                
+                // Process ALL available tweets, not just a batch
+                for (let i = 0; i < moreButtons.length; i++) {
+                    if (window.stopDeletion) break;
+                    
+                    await processTweet(moreButtons[i], totalTweetsProcessed);
+                    totalTweetsProcessed++;
+                    
+                    // Small pause between tweets
+                    await sleep(500);
+                }
+                
+                logStats();
+                
+                // Brief pause before looking for more tweets
+                await sleep(1000);
+            }
+        } catch (error) {
+            console.error('💥 Fatal error:', error);
+        }
+
+        // Final stats
+        logStats();
+        console.log('🎉 Script finished!');
+    };
+
+    // Start the deletion process
+    console.log('🚀 Starting continuous tweet deletion...');
+    await deleteLoop();
+};
+
+// Add stop function to global scope
+window.stopDeletion = false;
+
+// Run the script
+deleteTweets().catch(console.error);
+
+console.log(`
+Tweet Deletion Script Running!
+━━━━━━━━━━━━━━━━━━━━━━━━
+To stop: type "window.stopDeletion = true"
+━━━━━━━━━━━━━━━━━━━━━━━━
+`); 
