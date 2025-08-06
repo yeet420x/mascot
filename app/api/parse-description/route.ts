@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { GoogleGenAI } from "@google/genai"
+import { COMPREHENSIVE_TRAITS, getAllTraitValues } from '@/lib/comprehensive-traits'
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,6 +17,9 @@ export async function POST(request: NextRequest) {
     const ai = new GoogleGenAI({
       apiKey: process.env.GOOGLE_AI_KEY
     })
+
+    // Get all possible trait values for the AI to reference
+    const allTraitValues = getAllTraitValues()
 
     // Create a detailed prompt for parsing the description
     const prompt = `**TASK: PARSE MASCOT DESCRIPTION INTO STRUCTURED TRAITS**
@@ -39,66 +43,34 @@ export async function POST(request: NextRequest) {
   "bowtie": "color or 'none'"
 }
 
-**COMPREHENSIVE TRAIT RULES:**
+**COMPREHENSIVE TRAIT DATABASE - ALL POSSIBLE VALUES:**
 
 **HEAD STYLES (face/screen content):**
-- **Colors:** orange, blue, green, red, purple, yellow, pink, gray, black, white, brown, gold, silver, cyan, magenta
-- **Memes:** pepe, doge, wojak, chad, virgin, stonks, cheems, bonk, kek, monke, cat, dog, frog, rare
-- **Anime:** goku, naruto, luffy, saitama, deku, allmight, vegeta, goku, anime, manga, otaku, weeb
-- **Gaming:** pixel, 8bit, minecraft, roblox, fortnite, valorant, csgo, league, dota, overwatch, pokemon
-- **Tech:** matrix, cyber, digital, neon, glitch, hologram, vr, ar, ai, robot, android, cyborg
-- **Fantasy:** dragon, unicorn, wizard, elf, dwarf, orc, goblin, fairy, demon, angel, vampire, werewolf
-- **Sci-fi:** alien, space, galaxy, planet, star, nebula, blackhole, wormhole, time, dimension, quantum
-- **Art Styles:** cartoon, realistic, anime, manga, chibi, kawaii, gothic, punk, steampunk, cyberpunk, vaporwave
-- **Materials:** metallic, chrome, gold, silver, bronze, crystal, diamond, obsidian, marble, wood, stone
+${allTraitValues.head.join(', ')}
 
 **EYE STYLES:**
-- **Colors:** brown, blue, green, hazel, gray, black, amber, violet, golden, red, pink, white, yellow
-- **Effects:** glowing, neon, laser, fire, ice, electric, rainbow, prismatic, hypnotic, demonic, angelic
-- **Styles:** anime, realistic, cartoon, pixel, matrix, cyber, tech, magical, mystical, cursed, blessed
-- **Shapes:** round, oval, almond, cat, snake, dragon, alien, robot, mechanical, organic, crystalline
+${allTraitValues.eyes.join(', ')}
 
 **GLASSES TYPES:**
-- **Basic:** none, round, square, rectangular, oval, cat-eye, aviator, wayfarer, rimless, half-rim
-- **Tech:** cyber, matrix, hologram, vr, ar, smart, digital, futuristic, sci-fi, tech, neon, glowing
-- **Styles:** vintage, retro, modern, classic, trendy, hipster, professional, casual, sporty, elegant
-- **Materials:** metal, plastic, wood, crystal, diamond, gold, silver, chrome, matte, glossy, transparent
+${allTraitValues.glasses.join(', ')}
 
 **CLOTHING COLORS (shirt/pants/shoes):**
-- **Standard:** orange, blue, green, red, purple, pink, gray, white, black, yellow, brown, gold, silver
-- **Extended:** cyan, magenta, teal, indigo, violet, maroon, burgundy, navy, olive, lime, coral, salmon
-- **Metallic:** chrome, bronze, copper, platinum, titanium, steel, iron, brass, pewter, nickel
-- **Patterns:** camo, plaid, stripes, dots, stars, hearts, flowers, geometric, tribal, abstract, tie-dye
+${allTraitValues.clothing.join(', ')}
 
 **ACCESSORIES:**
-- **Jewelry:** crown, necklace, watch, bracelet, earrings, ring, chain, pendant, brooch, tiara, diadem
-- **Clothing:** scarf, tie, belt, backpack, purse, gloves, socks, cape, cloak, robe, armor, vest
-- **Weapons:** lightsaber, sword, dagger, bow, arrow, gun, blaster, staff, wand, shield, axe, hammer
-- **Tech:** phone, tablet, laptop, drone, robot, hologram, portal, device, gadget, tool, instrument
-- **Magic:** wand, staff, orb, crystal, gem, rune, scroll, potion, spell, charm, talisman, amulet
-- **Sports:** ball, racket, bat, glove, helmet, pads, uniform, jersey, cleats, sneakers, boots
-- **Nature:** flower, leaf, branch, stone, crystal, feather, shell, bone, fossil, gem, mineral
+${allTraitValues.accessories.join(', ')}
 
 **BACKGROUND THEMES:**
-- **Nature:** forest, jungle, desert, mountain, ocean, beach, sky, clouds, sunset, sunrise, night, day
-- **Urban:** city, street, building, office, home, room, cafe, shop, mall, park, bridge, road
-- **Space:** galaxy, stars, planets, nebula, blackhole, wormhole, space, cosmos, universe, void
-- **Tech:** matrix, cyber, digital, neon, glitch, hologram, circuit, data, code, binary, network
-- **Fantasy:** castle, dungeon, tower, temple, cave, portal, realm, dimension, world, kingdom
-- **Abstract:** geometric, patterns, gradients, solid, textured, animated, moving, flowing, swirling
-- **Art Styles:** painting, drawing, photo, digital, pixel, vector, 3d, realistic, cartoon, anime
+${allTraitValues.background.join(', ')}
 
 **HAT TYPES:**
-- **Caps:** red-cap, orange-cap, blue-cap, green-cap, purple-cap, yellow-cap, pink-cap, black-cap, white-cap
-- **Formal:** crown, tiara, diadem, beret, fedora, bowler, top-hat, cowboy, baseball-cap, beanie
-- **Fantasy:** wizard-hat, witch-hat, knight-helmet, viking-helmet, samurai-helmet, pirate-hat
-- **Tech:** vr-headset, ar-glasses, cyber-helmet, space-helmet, robot-head, android-head
+${allTraitValues.hat.join(', ')}
 
 **BOWTIE COLORS:**
-- **Standard:** none, red, blue, green, purple, orange, yellow, pink, black, white, gold, silver
-- **Extended:** cyan, magenta, teal, indigo, violet, maroon, burgundy, navy, olive, lime, coral
+${allTraitValues.bowtie.join(', ')}
 
 **SPECIAL CASES & CREATIVE CONCEPTS:**
+- **Physical Features:** sharp-jawline, strong-jaw, defined-jaw, angular-face, square-jaw, chiseled
 - **Memes:** pepe, doge, wojak, chad, virgin, stonks, cheems, bonk, kek, monke, cat, dog, frog, rare
 - **Anime:** goku, naruto, luffy, saitama, deku, allmight, vegeta, anime, manga, otaku, weeb
 - **Gaming:** minecraft, roblox, fortnite, valorant, csgo, league, dota, overwatch, pokemon, pixel, 8bit
@@ -109,6 +81,10 @@ export async function POST(request: NextRequest) {
 - **Effects:** glowing, neon, laser, fire, ice, electric, rainbow, prismatic, hypnotic, demonic, angelic
 
 **CONTEXT UNDERSTANDING:**
+- If "sharp jawline" is mentioned, set head to "sharp-jawline"
+- If "sword" is mentioned, set accessories to "sword"
+- If "yellow background with stars" is mentioned, set background to "yellow-stars"
+- If "blue eyes" is mentioned, set eyes to "blue"
 - If "pepe" is mentioned, set head to "pepe" (frog meme face)
 - If "lightsaber" is mentioned, set accessories to "lightsaber"
 - If "matrix" is mentioned, set background to "matrix" and head to "matrix"
@@ -124,8 +100,12 @@ export async function POST(request: NextRequest) {
 - If "fantasy" is mentioned, set background to "fantasy"
 - If "space" is mentioned, set background to "space"
 - If "nature" is mentioned, set background to "nature"
+- If "urban" is mentioned, set background to "urban"
+- If "abstract" is mentioned, set background to "abstract"
+- If "art" is mentioned, set background to "art-styles"
 
 **FACE STYLE CONCEPTS:**
+- **sharp-jawline:** Defined, angular jawline style
 - **pepe:** Frog meme face displayed inside the mascot's screen
 - **doge:** Shiba Inu meme face shown inside the mascot's screen
 - **goku:** Dragon Ball anime style inside the mascot's screen
@@ -142,9 +122,9 @@ export async function POST(request: NextRequest) {
 
 **OUTPUT FORMAT:** Return ONLY the JSON object, no additional text or explanation.
 
-**EXAMPLE INPUT:** "A pepe face mascot with neon eyes, cyber glasses, wearing a black shirt and red pants holding a lightsaber"
+**EXAMPLE INPUT:** "a mascot with sharp jawline,blue eyes, and sword in his left arm and yellow background with stars"
 
-**EXAMPLE OUTPUT:** {"head":"pepe","eyes":"neon","glasses":"tech","shirt":"black","pants":"red","shoes":"black","accessories":"lightsaber","background":"cyber","hat":"none","bowtie":"none"}`
+**EXAMPLE OUTPUT:** {"head":"sharp-jawline","eyes":"blue","glasses":"none","shirt":"orange","pants":"blue","shoes":"black","accessories":"sword","background":"yellow-stars","hat":"none","bowtie":"none"}`
 
     // Generate structured traits using Gemini
     const response = await ai.models.generateContent({
@@ -193,7 +173,8 @@ export async function POST(request: NextRequest) {
       traits: finalTraits,
       originalDescription: description,
       aiResponse: responseText,
-      model: "gemini-2.0-flash-exp"
+      model: "gemini-2.0-flash-exp",
+      availableTraits: allTraitValues
     })
 
   } catch (error) {
