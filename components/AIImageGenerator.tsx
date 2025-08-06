@@ -38,7 +38,7 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
   const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'manual' | 'prompt'>('manual')
-  const [rpcUrl, setRpcUrl] = useState<string>('https://api.mainnet-beta.solana.com')
+  const [rpcUrl, setRpcUrl] = useState<string>('https://solana-mainnet.g.alchemy.com/v2/demo')
 
   // Fetch RPC URL securely from server
   useEffect(() => {
@@ -48,11 +48,15 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
         if (response.ok) {
           const data = await response.json()
           setRpcUrl(data.rpcUrl)
+          console.log('RPC URL loaded:', data.source, data.rpcUrl)
+        } else {
+          console.error('Failed to fetch RPC URL, using fallback')
+          setRpcUrl('https://solana-mainnet.g.alchemy.com/v2/demo')
         }
       } catch (error) {
         console.error('Failed to fetch RPC URL:', error)
-        // Fallback to default
-        setRpcUrl('https://api.mainnet-beta.solana.com')
+        // Fallback to a more reliable RPC
+        setRpcUrl('https://solana-mainnet.g.alchemy.com/v2/demo')
       }
     }
 
