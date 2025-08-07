@@ -104,16 +104,16 @@ export async function POST(request: NextRequest) {
         description += `The character is wearing ${traits.shoes} colored shoes. `
       }
 
-      // Accessories
+      // Accessories - CRITICAL: Use existing hands, NEVER add new ones
       if (traits.accessories && traits.accessories !== 'none') {
         if (traits.accessories === 'sword') {
-          description += 'The character is holding a sword in their hand. '
+          description += 'The character is holding a sword in their EXISTING hands. CRITICAL: Do NOT add new hands, do NOT change hand positions, do NOT add third or fourth hands. Use ONLY the hands that are already touching the bowtie. '
         } else if (traits.accessories === 'lightsaber') {
-          description += 'The character is holding a lightsaber. '
+          description += 'The character is holding a lightsaber in their EXISTING hands. CRITICAL: Do NOT add new hands, do NOT change hand positions, do NOT add third or fourth hands. Use ONLY the hands that are already touching the bowtie. '
         } else if (traits.accessories === 'crown') {
           description += 'The character is wearing a crown. '
         } else if (traits.accessories.includes('weapon') || traits.accessories.includes('dagger') || traits.accessories.includes('bow')) {
-          description += `The character is holding a ${traits.accessories}. `
+          description += `The character is holding a ${traits.accessories} in their EXISTING hands. CRITICAL: Do NOT add new hands, do NOT change hand positions, do NOT add third or fourth hands. Use ONLY the hands that are already touching the bowtie. `
         } else if (traits.accessories.includes('tech') || traits.accessories.includes('phone') || traits.accessories.includes('laptop')) {
           description += `The character has a ${traits.accessories} tech accessory. `
         } else if (traits.accessories.includes('magic') || traits.accessories.includes('wand') || traits.accessories.includes('staff')) {
@@ -174,6 +174,12 @@ export async function POST(request: NextRequest) {
     // Create a detailed prompt for assembly
     const prompt = `**TASK: CHARACTER HEAD REPLACEMENT WITH TRAIT MODIFICATIONS**
 
+    **CRITICAL WARNING: HANDS MUST REMAIN UNCHANGED**
+    - The character's hands in IMAGE 2 are touching a bowtie
+    - These hands MUST stay in their exact positions
+    - Do NOT add new hands, do NOT change hand positions, do NOT add third or fourth hands
+    - Use ONLY the existing hands for any accessories
+
     **INPUTS:**
     - **IMAGE 1:** The NEW HEAD to be used (head.png).
     - **IMAGE 2:** The character BODY (body.png), which includes an OLD HEAD that must be replaced.
@@ -191,7 +197,9 @@ export async function POST(request: NextRequest) {
     - **PERFECT REPLICATION:** The new head in the final image MUST be a PERFECT replica of IMAGE 1.
     - **SEAMLESS BLEND:** The art styles of the head and body must blend perfectly.
     - **ONLY SPECIFIED CHANGES:** Do not add, remove, or change ANY elements other than the head replacement and the listed traits. Every generation must be otherwise identical.
-    - **ACCESSORIES:** If accessories like swords are mentioned, add them naturally to the character's hands or appropriate position.
+    - **CRITICAL HANDS RULE:** The character's hands MUST remain in their EXACT original positions from IMAGE 2. Do NOT add additional hands, do NOT change hand positions, do NOT add third or fourth hands. The hands that are touching the bowtie must stay exactly where they are.
+    - **ACCESSORIES RULE:** If accessories like swords are mentioned, add them naturally to the character's EXISTING hands ONLY. Use the hands that are already touching the bowtie. Do NOT create new hands or modify the hand positions.
+    - **ABSOLUTE HANDS RESTRICTION:** Under NO circumstances should you add new hands, change hand positions, or create additional hands. The hands from IMAGE 2 must remain unchanged.
     - **BACKGROUND:** Apply the background modifications as specified in the trait description.
     - **FACE STYLES:** If specific face styles (pepe, doge, goku, matrix, etc.) are mentioned, apply them to the character's face/screen area while maintaining the mascot's basic structure.`
 

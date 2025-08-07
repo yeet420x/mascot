@@ -1,0 +1,207 @@
+const unfollowUsers = async () => {
+    // Configuration
+    const SCROLL_PAUSE = 2000;
+    const UNFOLLOW_PAUSE = 1000;
+    const SCROLL_AMOUNT = 2000;
+    const MAX_EMPTY_SCROLLS = 10;
+    
+    // Stats tracking
+    let stats = {
+        unfollowed: 0,
+        failed: 0,
+        start: Date.now(),
+        totalProcessed: 0
+    };
+
+    // Helper functions
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    
+    const formatTime = (ms) => {
+        const seconds = Math.floor(ms / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        return `${hours}h ${minutes % 60}m ${seconds % 60}s`;
+    };
+
+    const logStats = () => {
+        const runtime = Date.now() - stats.start;
+        console.log(`
+👥 Unfollow Progress:
+━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Unfollowed: ${stats.unfollowed}
+❌ Failed: ${stats.failed}
+📊 Total Processed: ${stats.totalProcessed}
+⏱️ Runtime: ${formatTime(runtime)}
+━━━━━━━━━━━━━━━━━━━━━━━━
+        `);
+    };
+
+    // Simple function to find following buttons
+    const findFollowingButtons = () => {
+        // Look for buttons with "Following" text
+        const buttons = Array.from(document.querySelectorAll('div[role="button"], span[role="button"], button'));
+        const followingButtons = buttons.filter(button => {
+            const text = button.textContent?.trim() || '';
+            return text === 'Following' || text.includes('Following');
+        });
+        
+        console.log(`🔍 Found ${followingButtons.length} "Following" buttons`);
+        return followingButtons;
+    };
+
+    // Simple function to scroll for more content
+    const scrollForMore = async () => {
+        const prevCount = findFollowingButtons().length;
+        console.log(`📜 Scrolling for more users... (Current: ${prevCount})`);
+        
+        window.scrollBy(0, SCROLL_AMOUNT);
+        await sleep(SCROLL_PAUSE);
+        
+        const newCount = findFollowingButtons().length;
+        console.log(`📊 After scroll: ${newCount} buttons found`);
+        
+        return {
+            hasMore: newCount > prevCount,
+            newCount
+        };
+    };
+
+    // Simple function to process one user
+    const processUser = async (button, index) => {
+        try {
+            console.log(`🔄 Processing user ${index + 1}...`);
+            
+            // Scroll button into view
+            button.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            await sleep(500);
+            
+            // Click the following button
+            console.log('🖱️ Clicking Following button...');
+            button.click();
+            await sleep(1000);
+            
+            // Look for "Unfollow" text in any button
+            const allButtons = document.querySelectorAll('div[role="button"], span[role="button"], button');
+            let unfollowButton = null;
+            
+            for (const btn of allButtons) {
+                const text = btn.textContent?.trim() || '';
+                if (text === 'Unfollow' || text.includes('Unfollow')) {
+                    unfollowButton = btn;
+                    break;
+                }
+            }
+            
+            if (unfollowButton) {
+                console.log('✅ Found Unfollow button, clicking...');
+                unfollowButton.click();
+                await sleep(500);
+                
+                // Look for confirmation button
+                const confirmButtons = document.querySelectorAll('div[role="button"], span[role="button"], button');
+                let confirmButton = null;
+                
+                for (const btn of confirmButtons) {
+                    const text = btn.textContent?.trim() || '';
+                    if (text === 'Unfollow' || text.includes('Unfollow') || text === 'Confirm') {
+                        confirmButton = btn;
+                        break;
+                    }
+                }
+                
+                if (confirmButton) {
+                    console.log('✅ Found confirmation button, clicking...');
+                    confirmButton.click();
+                    stats.unfollowed++;
+                    console.log(`✅ Successfully unfollowed user ${index + 1}`);
+                    await sleep(UNFOLLOW_PAUSE);
+                } else {
+                    console.log(`⚠️ No confirmation button found`);
+                    document.body.click(); // Close menu
+                }
+            } else {
+                console.log(`⚠️ No unfollow option found`);
+                document.body.click(); // Close menu
+            }
+            
+            stats.totalProcessed++;
+            
+        } catch (error) {
+            console.error(`❌ Error processing user ${index + 1}:`, error);
+            stats.failed++;
+            document.body.click(); // Close any open menus
+        }
+    };
+
+    // Main loop
+    const mainLoop = async () => {
+        let consecutiveEmptyScrolls = 0;
+        let totalProcessed = 0;
+        
+        try {
+            while (true) {
+                if (window.stopUnfollow) {
+                    console.log('🛑 Stop signal received!');
+                    break;
+                }
+                
+                const buttons = findFollowingButtons();
+                
+                if (buttons.length === 0) {
+                    console.log('📜 No following buttons found, scrolling...');
+                    const scrollResult = await scrollForMore();
+                    
+                    if (!scrollResult.hasMore) {
+                        consecutiveEmptyScrolls++;
+                        console.log(`⚠️ No new content (attempt ${consecutiveEmptyScrolls}/${MAX_EMPTY_SCROLLS})`);
+                        
+                        if (consecutiveEmptyScrolls >= MAX_EMPTY_SCROLLS) {
+                            console.log('🏁 Reached maximum empty scrolls, finishing...');
+                            break;
+                        }
+                    } else {
+                        consecutiveEmptyScrolls = 0;
+                        console.log(`🎉 Found ${scrollResult.newCount} new users!`);
+                    }
+                    continue;
+                }
+                
+                consecutiveEmptyScrolls = 0;
+                console.log(`🎯 Processing ${buttons.length} users...`);
+                
+                for (let i = 0; i < buttons.length; i++) {
+                    if (window.stopUnfollow) break;
+                    
+                    await processUser(buttons[i], totalProcessed);
+                    totalProcessed++;
+                    await sleep(500);
+                }
+                
+                logStats();
+                await sleep(1000);
+            }
+        } catch (error) {
+            console.error('💥 Fatal error:', error);
+        }
+        
+        logStats();
+        console.log('🎉 Script finished!');
+    };
+
+    // Start the process
+    console.log('🚀 Starting simple unfollow script...');
+    await mainLoop();
+};
+
+// Add stop function
+window.stopUnfollow = false;
+
+// Run the script
+unfollowUsers().catch(console.error);
+
+console.log(`
+Simple Unfollow Script Running!
+━━━━━━━━━━━━━━━━━━━━━━━━
+To stop: type "window.stopUnfollow = true"
+━━━━━━━━━━━━━━━━━━━━━━━━
+`); 

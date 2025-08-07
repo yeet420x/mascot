@@ -124,7 +124,7 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
     <div className="space-y-6">
       {/* Tab Navigation */}
       <div className="flex space-x-1 bg-gray-100 rounded-lg p-1">
-        <button
+      <button
           onClick={() => setActiveTab('manual')}
           className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
             activeTab === 'manual'
@@ -133,8 +133,8 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
           }`}
         >
           Manual Selection
-        </button>
-        <button
+              </button>
+              <button
           onClick={() => setActiveTab('prompt')}
           className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
             activeTab === 'prompt'
@@ -144,7 +144,7 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
         >
           <MessageSquare className="inline mr-2" size={16} />
           AI Prompt
-        </button>
+              </button>
       </div>
 
       {/* Tab Content */}
@@ -156,22 +156,22 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
 
       {/* Generate Button */}
       {activeTab === 'manual' && (
-        <button
+      <button
           onClick={handleGenerate}
-          disabled={isGenerating}
+        disabled={isGenerating}
           className="w-full flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-candle-orange to-purple-600 text-white rounded-lg hover:from-candle-accent hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isGenerating ? (
-            <>
+      >
+        {isGenerating ? (
+          <>
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-              <span>Generating Mascot...</span>
-            </>
-          ) : (
-            <>
+            <span>Generating Mascot...</span>
+          </>
+        ) : (
+          <>
               <span>Generate Mascot</span>
-            </>
-          )}
-        </button>
+          </>
+        )}
+      </button>
       )}
 
       {/* Error Display */}
@@ -191,7 +191,7 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
               className="w-full h-auto rounded-lg"
             />
           </div>
-          
+
           <NFTMinter
             imageUrl={generatedImageUrl}
             description={`Candle TV Mascot with traits: ${JSON.stringify(traits)}`}
