@@ -84,18 +84,18 @@ export async function POST(request: NextRequest) {
     let imageUri = ''
     
     try {
-      // Get QuickNode RPC URL
-      // Construct the RPC URL endpoint
-      const baseUrl = process.env.VERCEL_URL 
-        ? `https://${process.env.VERCEL_URL}` 
-        : 'http://localhost:3000'
-      const rpcResponse = await fetch(`${baseUrl}/api/get-rpc-url`)
-      if (!rpcResponse.ok) {
-        throw new Error('Failed to get RPC URL')
-      }
-      const { rpcUrl } = await rpcResponse.json()
+      // Get RPC URL directly
+      const rpcUrl = process.env.QUICKNODE_RPC || 
+                    process.env.NEXT_PUBLIC_QUICKNODE_RPC || 
+                    'https://ssc-dao.genesysgo.net'
       
-      console.log('🔗 Using RPC URL:', rpcUrl)
+      if (!rpcUrl) {
+        throw new Error('No RPC URL available')
+      }
+      
+      // Log RPC URL (hiding sensitive parts)
+      const sanitizedUrl = rpcUrl.split('/').slice(0, 3).join('/') + '/...'
+      console.log('🔗 Using RPC URL:', sanitizedUrl)
       
       // Initialize Shadow Drive SDK with QuickNode
       const connection = new Connection(rpcUrl, {
