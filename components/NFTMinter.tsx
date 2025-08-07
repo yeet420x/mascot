@@ -155,7 +155,14 @@ export default function NFTMinter({ imageUrl, description = 'AI-Generated Candle
 
       // Sign and send the transaction
       setStatus('Confirming transaction...')
-      const result = await tx.sendAndConfirm(umi)
+      const result = await tx.sendAndConfirm(umi, {
+        send: {
+          skipPreflight: true,
+        },
+        confirm: {
+          commitment: 'confirmed',
+        },
+      })
       
       // Store mint address and transaction signature
       const mintAddressStr = mint.publicKey.toString()

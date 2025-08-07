@@ -100,7 +100,8 @@ export async function POST(request: NextRequest) {
       // Initialize Shadow Drive SDK with QuickNode
       const connection = new Connection(rpcUrl, {
         commitment: 'confirmed',
-        confirmTransactionInitialTimeout: 60000
+        confirmTransactionInitialTimeout: 90000,
+        wsEndpoint: rpcUrl.replace('https://', 'wss://'),
       })
       
       // Create wallet object for Shadow Drive
