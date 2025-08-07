@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
       // Get RPC URL directly
       const rpcUrl = process.env.QUICKNODE_RPC || 
                     process.env.NEXT_PUBLIC_QUICKNODE_RPC || 
-                    'https://ssc-dao.genesysgo.net'
+                    'https://blue-aged-tab.solana-mainnet.quiknode.pro/83eaeacbf72cf08a1c44128a775b0e3606cb6c6c/'
       
       if (!rpcUrl) {
         throw new Error('No RPC URL available')
