@@ -120,7 +120,11 @@ export default function NFTMinter({ imageUrl, description = 'AI-Generated Candle
       setStatus('Creating NFT...')
       
       // Get QuickNode RPC URL
-      const rpcResponse = await fetch('/api/get-rpc-url')
+      const rpcResponse = await fetch('/api/get-rpc-url', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       if (!rpcResponse.ok) {
         throw new Error('Failed to get RPC URL')
       }
