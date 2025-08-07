@@ -96,14 +96,30 @@ export async function POST(request: NextRequest) {
     console.log('📤 Sending transaction to Solana...')
     console.log('📤 Using RPC endpoint:', rpcUrl)
     
+    let signature: string | undefined
+    
     try {
-      const signature = await connection.sendRawTransaction(signedTransactionBuffer, {
+      signature = await connection.sendRawTransaction(signedTransactionBuffer, {
         skipPreflight: false,
         preflightCommitment: 'confirmed',
         maxRetries: 3
       })
       console.log('✅ Transaction sent to Solana network')
       console.log('📝 Transaction signature:', signature)
+      
+      // Wait for confirmation
+      console.log('⏳ Waiting for transaction confirmation...')
+      const confirmation = await connection.confirmTransaction(signature, 'confirmed')
+      console.log('📝 Confirmation result:', confirmation)
+
+      if (confirmation.value.err) {
+        console.error('❌ Transaction failed during confirmation')
+        throw new Error(`Transaction failed: ${confirmation.value.err}`)
+      }
+
+      console.log('🎉 Transaction sent and confirmed successfully!')
+      console.log('Transaction Signature:', signature)
+      
     } catch (error) {
       console.error('❌ Failed to send transaction to Solana')
       console.error('❌ Error details:', error)
@@ -113,29 +129,18 @@ export async function POST(request: NextRequest) {
         console.error('❌ Transaction logs:', error.logs)
       }
       
-      // Try to get logs using getLogs if available
-      try {
-        const logs = await connection.getLogs('all', { limit: 10 })
-        console.error('❌ Recent RPC logs:', logs)
-      } catch (logError) {
-        console.error('❌ Could not get RPC logs:', logError)
+      // Try to get recent transaction status
+      if (signature) {
+        try {
+          const status = await connection.getSignatureStatus(signature)
+          console.error('❌ Transaction status:', status)
+        } catch (statusError) {
+          console.error('❌ Could not get transaction status:', statusError)
+        }
       }
       
       throw error
     }
-
-    // Wait for confirmation
-    console.log('⏳ Waiting for transaction confirmation...')
-    const confirmation = await connection.confirmTransaction(signature, 'confirmed')
-    console.log('📝 Confirmation result:', confirmation)
-
-    if (confirmation.value.err) {
-      console.error('❌ Transaction failed during confirmation')
-      throw new Error(`Transaction failed: ${confirmation.value.err}`)
-    }
-
-    console.log('🎉 Transaction sent and confirmed successfully!')
-    console.log('Transaction Signature:', signature)
 
     return NextResponse.json({
       success: true,
