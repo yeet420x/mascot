@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
     // Use a more reliable fallback RPC URL
     const rpcUrl = process.env.QUICKNODE_RPC || 
                    process.env.NEXT_PUBLIC_QUICKNODE_RPC || 
-                   'https://solana-mainnet.g.alchemy.com/v2/demo' // More reliable fallback
+                   'https://ssc-dao.genesysgo.net' // GenesysGo is recommended for Shadow Drive
     
     return NextResponse.json({
       rpcUrl,

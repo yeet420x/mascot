@@ -85,7 +85,11 @@ export async function POST(request: NextRequest) {
     
     try {
       // Get QuickNode RPC URL
-      const rpcResponse = await fetch(new URL('/api/get-rpc-url', process.env.VERCEL_URL || 'http://localhost:3000'))
+      // Construct the RPC URL endpoint
+      const baseUrl = process.env.VERCEL_URL 
+        ? `https://${process.env.VERCEL_URL}` 
+        : 'http://localhost:3000'
+      const rpcResponse = await fetch(`${baseUrl}/api/get-rpc-url`)
       if (!rpcResponse.ok) {
         throw new Error('Failed to get RPC URL')
       }
