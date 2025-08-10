@@ -43,15 +43,15 @@ body {
 
 /* Light mode styles */
 body {
-  background: linear-gradient(135deg, #FFE4D6 0%, #FFF2E6 25%, #FFCC99 50%, #FFB366 75%, #FF8C42 100%);
-  color: #2C1810;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F5F5F5 25%, #E64A19 50%, #D84315 75%, #BF360C 100%);
+  color: #1A1A1A;
   transition: all 0.3s ease;
 }
 
 /* Dark mode styles */
 body.dark {
-  background: linear-gradient(135deg, #1A1A1A 0%, #2C1810 25%, #4A2C1A 50%, #6B3D2A 75%, #8B4E3A 100%);
-  color: #FFE4D6;
+  background: linear-gradient(135deg, #1A1A1A 0%, #2C2C2C 25%, #D84315 50%, #E64A19 75%, #F4511E 100%);
+  color: #FFFFFF;
   transition: all 0.3s ease;
 }
 
@@ -63,34 +63,34 @@ a {
 
 /* Enhanced candle gradient for light mode */
 .candle-gradient {
-  background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 20%, #FFA366 40%, #FFB366 60%, #FFCC99 80%, #FFE4D6 100%);
+  background: linear-gradient(135deg, #D84315 0%, #E64A19 20%, #F4511E 40%, #D84315 60%, #E64A19 80%, #FFFFFF 100%);
 }
 
 /* Dark mode candle gradient */
 .dark .candle-gradient {
-  background: linear-gradient(135deg, #2C1810 0%, #4A2C1A 25%, #6B3D2A 50%, #8B4E3A 75%, #A55F4A 100%);
+  background: linear-gradient(135deg, #1A1A1A 0%, #2C2C2C 25%, #D84315 50%, #E64A19 75%, #F4511E 100%);
 }
 
 /* Custom shadow classes */
 .candle-shadow {
-  box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+  box-shadow: 0 10px 25px rgba(216, 67, 21, 0.3);
 }
 
 .dark .candle-shadow {
-  box-shadow: 0 10px 25px rgba(255, 107, 53, 0.2);
+  box-shadow: 0 10px 25px rgba(216, 67, 21, 0.2);
 }
 
 /* Canvas styles */
 .mascot-canvas {
-  border: 3px solid #FF6B35;
+  border: 3px solid #D84315;
   border-radius: 20px;
   background: white;
   transition: all 0.3s ease;
 }
 
 .dark .mascot-canvas {
-  border: 3px solid #FF8C42;
-  background: #2C1810;
+  border: 3px solid #E64A19;
+  background: #1A1A1A;
 }
 
 /* Trait button styles */
@@ -100,11 +100,11 @@ a {
 
 .trait-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 5px 15px rgba(216, 67, 21, 0.4);
 }
 
 .dark .trait-button:hover {
-  box-shadow: 0 5px 15px rgba(255, 140, 66, 0.3);
+  box-shadow: 0 5px 15px rgba(230, 74, 25, 0.3);
 }
 
 /* Header font styles */
@@ -122,7 +122,7 @@ a {
 /* Logo styles */
 .logo-text {
   font-family: var(--font-rolling-beat), 'Rolling Beat', cursive;
-  background: linear-gradient(135deg, #FF6B35, #FF8C42, #FFA366, #FFB366);
+  background: linear-gradient(135deg, #D84315, #E64A19, #F4511E, #D84315);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -130,7 +130,7 @@ a {
 }
 
 .dark .logo-text {
-  background: linear-gradient(135deg, #FF8C42, #FFA366, #FFB366, #FFCC99);
+  background: linear-gradient(135deg, #E64A19, #F4511E, #D84315, #E64A19);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -138,7 +138,7 @@ a {
 
 .logo-fancy {
   font-family: var(--font-rolling-beat), 'Rolling Beat', cursive;
-  background: linear-gradient(135deg, #FF6B35, #FF8C42, #FFA366);
+  background: linear-gradient(135deg, #D84315, #E64A19, #F4511E);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -146,7 +146,7 @@ a {
 }
 
 .dark .logo-fancy {
-  background: linear-gradient(135deg, #FF8C42, #FFA366, #FFB366);
+  background: linear-gradient(135deg, #E64A19, #F4511E, #D84315);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -154,32 +154,32 @@ a {
 
 /* Enhanced orange palette components */
 .orange-accent {
-  background: linear-gradient(135deg, #FF6B35, #FF8C42, #FFA366);
+  background: linear-gradient(135deg, #D84315, #E64A19, #F4511E);
 }
 
 .orange-warm {
-  background: linear-gradient(135deg, #FFB366, #FFCC99, #FFE4D6);
+  background: linear-gradient(135deg, #D84315, #E64A19, #FFFFFF);
 }
 
 .orange-sunset {
-  background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 20%, #FFA366 40%, #FFB366 60%, #FFCC99 80%, #FFE4D6 100%);
+  background: linear-gradient(135deg, #D84315 0%, #E64A19 20%, #F4511E 40%, #D84315 60%, #E64A19 80%, #FFFFFF 100%);
 }
 
 /* Dark mode specific styles */
 .dark .bg-white {
-  background-color: #2C1810;
+  background-color: #1A1A1A;
 }
 
 .dark .text-gray-600 {
-  color: #FFCC99;
+  color: #E64A19;
 }
 
 .dark .text-candle-dark {
-  color: #FFE4D6;
+  color: #FFFFFF;
 }
 
 .dark .bg-candle-light {
-  background-color: #2C1810;
+  background-color: #1A1A1A;
 }
 
 .dark .shadow-lg {
@@ -203,6 +203,6 @@ a {
 }
 
 @keyframes glow-pulse {
-  0% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.3); }
-  100% { box-shadow: 0 0 30px rgba(255, 107, 53, 0.6); }
+  0% { box-shadow: 0 0 20px rgba(216, 67, 21, 0.3); }
+  100% { box-shadow: 0 0 30px rgba(216, 67, 21, 0.6); }
 } 
