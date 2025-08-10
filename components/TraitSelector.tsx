@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { TraitCategory, MascotTraits } from '@/types/mascot'
+import ColorWheel from './ColorWheel'
 
 interface TraitSelectorProps {
   traits: MascotTraits
@@ -14,82 +15,130 @@ const traitCategories = [
     label: 'Head Style',
     options: [
       { id: 'default', name: 'Default', color: '#F5F5DC' },
-      { id: 'orange', name: 'Orange', color: '#FF6B35' },
-      { id: 'blue', name: 'Blue', color: '#3B82F6' },
-      { id: 'green', name: 'Green', color: '#10B981' },
-      { id: 'red', name: 'Red', color: '#EF4444' },
-    ]
+      { id: 'sharp-jawline', name: 'Sharp Jawline', color: '#FFB74D' },
+      { id: 'pepe', name: 'Pepe Style', color: '#4CAF50' },
+      { id: 'doge', name: 'Doge Style', color: '#FFD700' },
+      { id: 'goku', name: 'Goku Style', color: '#FF5722' },
+      { id: 'matrix', name: 'Matrix Code', color: '#00FF00' },
+      { id: 'pixel', name: '8-bit Style', color: '#2196F3' },
+      { id: 'anime', name: 'Anime Style', color: '#E91E63' },
+      { id: 'metallic', name: 'Metallic', color: '#9E9E9E' },
+      { id: 'neon', name: 'Neon Glow', color: '#00BCD4' },
+      { id: 'cyber', name: 'Cyberpunk', color: '#7C4DFF' }
+    ],
+    hasColorWheel: false
   },
   {
     category: 'eyes' as TraitCategory,
-    label: 'Eye Color',
+    label: 'Eye Style',
     options: [
       { id: 'default', name: 'Default', color: '#000000' },
-      { id: 'brown', name: 'Brown', color: '#8B4513' },
-      { id: 'blue', name: 'Blue', color: '#3B82F6' },
-      { id: 'green', name: 'Green', color: '#10B981' },
-      { id: 'hazel', name: 'Hazel', color: '#CD853F' },
-    ]
+      { id: 'glowing-blue', name: 'Glowing Blue', color: '#2196F3' },
+      { id: 'glowing-red', name: 'Glowing Red', color: '#F44336' },
+      { id: 'glowing-green', name: 'Glowing Green', color: '#4CAF50' },
+      { id: 'anime-sparkle', name: 'Anime Sparkle', color: '#E91E63' },
+      { id: 'laser', name: 'Laser Eyes', color: '#FF5722' },
+      { id: 'rainbow', name: 'Rainbow', color: '#9C27B0' },
+      { id: 'galaxy', name: 'Galaxy', color: '#3F51B5' },
+      { id: 'demonic', name: 'Demonic', color: '#D32F2F' },
+      { id: 'angelic', name: 'Angelic', color: '#FFC107' },
+      { id: 'custom', name: 'Custom Color', color: '#000000' }
+    ],
+    hasColorWheel: true
   },
   {
     category: 'glasses' as TraitCategory,
     label: 'Glasses',
     options: [
       { id: 'none', name: 'None', color: 'transparent' },
-      { id: 'round', name: 'Round', color: '#6B7280' },
-      { id: 'square', name: 'Square', color: '#374151' },
-      { id: 'aviator', name: 'Aviator', color: '#1F2937' },
-      { id: 'sunglasses', name: 'Sunglasses', color: '#111827' },
-    ]
+      { id: 'round-tech', name: 'Round Tech', color: '#2196F3' },
+      { id: 'cyber-visor', name: 'Cyber Visor', color: '#7C4DFF' },
+      { id: 'matrix-shades', name: 'Matrix Shades', color: '#000000' },
+      { id: 'vintage-round', name: 'Vintage Round', color: '#795548' },
+      { id: 'steampunk', name: 'Steampunk', color: '#FF9800' },
+      { id: 'neon-rim', name: 'Neon Rim', color: '#00BCD4' },
+      { id: 'hologram', name: 'Hologram', color: '#4CAF50' },
+      { id: 'pixel-shades', name: '8-bit Shades', color: '#9E9E9E' },
+      { id: 'star-shaped', name: 'Star Shaped', color: '#FFC107' },
+      { id: 'custom', name: 'Custom Style', color: '#000000' }
+    ],
+    hasColorWheel: true
   },
   {
     category: 'shirt' as TraitCategory,
-    label: 'Shirt Color',
+    label: 'Shirt Style',
     options: [
       { id: 'default', name: 'Default', color: '#F5F5DC' },
-      { id: 'orange', name: 'Orange', color: '#FF6B35' },
-      { id: 'blue', name: 'Blue', color: '#3B82F6' },
-      { id: 'green', name: 'Green', color: '#10B981' },
-      { id: 'red', name: 'Red', color: '#EF4444' },
-    ]
-  },
-  {
-    category: 'pants' as TraitCategory,
-    label: 'Pants Color',
-    options: [
-      { id: 'default', name: 'Default', color: '#F5F5DC' },
-      { id: 'blue', name: 'Blue', color: '#3B82F6' },
-      { id: 'black', name: 'Black', color: '#000000' },
-      { id: 'brown', name: 'Brown', color: '#8B4513' },
-      { id: 'gray', name: 'Gray', color: '#6B7280' },
-    ]
-  },
-  {
-    category: 'shoes' as TraitCategory,
-    label: 'Shoe Color',
-    options: [
-      { id: 'default', name: 'Default', color: '#F5F5DC' },
-      { id: 'black', name: 'Black', color: '#000000' },
-      { id: 'brown', name: 'Brown', color: '#8B4513' },
-      { id: 'white', name: 'White', color: '#FFFFFF' },
-      { id: 'red', name: 'Red', color: '#EF4444' },
-    ]
+      { id: 'hoodie', name: 'Hoodie', color: '#FF5722' },
+      { id: 'cyber-jacket', name: 'Cyber Jacket', color: '#7C4DFF' },
+      { id: 'tank-top', name: 'Tank Top', color: '#2196F3' },
+      { id: 'suit', name: 'Suit', color: '#000000' },
+      { id: 'neon-vest', name: 'Neon Vest', color: '#00BCD4' },
+      { id: 'pixel-shirt', name: '8-bit Shirt', color: '#4CAF50' },
+      { id: 'space-suit', name: 'Space Suit', color: '#9E9E9E' },
+      { id: 'ninja-gi', name: 'Ninja Gi', color: '#212121' },
+      { id: 'mage-robe', name: 'Mage Robe', color: '#673AB7' },
+      { id: 'custom', name: 'Custom Style', color: '#FF6B35' }
+    ],
+    hasColorWheel: true
   },
   {
     category: 'accessories' as TraitCategory,
     label: 'Accessories',
     options: [
       { id: 'none', name: 'None', color: 'transparent' },
-      { id: 'hat', name: 'Hat', color: '#FF6B35' },
-      { id: 'crown', name: 'Crown', color: '#F59E0B' },
-      { id: 'bowtie', name: 'Bow Tie', color: '#EF4444' },
-      { id: 'necklace', name: 'Necklace', color: '#8B5CF6' },
-    ]
+      { id: 'sword', name: 'Sword', color: '#9E9E9E' },
+      { id: 'lightsaber', name: 'Lightsaber', color: '#2196F3' },
+      { id: 'cyber-arm', name: 'Cyber Arm', color: '#7C4DFF' },
+      { id: 'magic-staff', name: 'Magic Staff', color: '#E91E63' },
+      { id: 'holo-wings', name: 'Holo Wings', color: '#00BCD4' },
+      { id: 'jetpack', name: 'Jetpack', color: '#FF5722' },
+      { id: 'energy-shield', name: 'Energy Shield', color: '#4CAF50' },
+      { id: 'pixel-weapon', name: '8-bit Weapon', color: '#9C27B0' },
+      { id: 'dragon-pet', name: 'Dragon Pet', color: '#FF9800' },
+      { id: 'custom', name: 'Custom Item', color: '#000000' }
+    ],
+    hasColorWheel: true
+  },
+  {
+    category: 'background' as TraitCategory,
+    label: 'Background',
+    options: [
+      { id: 'default', name: 'Default', color: '#F5F5DC' },
+      { id: 'matrix-rain', name: 'Matrix Rain', color: '#000000' },
+      { id: 'cyber-city', name: 'Cyber City', color: '#7C4DFF' },
+      { id: 'space-nebula', name: 'Space Nebula', color: '#3F51B5' },
+      { id: 'pixel-landscape', name: 'Pixel Landscape', color: '#4CAF50' },
+      { id: 'magic-realm', name: 'Magic Realm', color: '#9C27B0' },
+      { id: 'neon-grid', name: 'Neon Grid', color: '#00BCD4' },
+      { id: 'abstract-art', name: 'Abstract Art', color: '#FF5722' },
+      { id: 'rainbow-waves', name: 'Rainbow Waves', color: '#E91E63' },
+      { id: 'star-field', name: 'Star Field', color: '#FFC107' },
+      { id: 'custom', name: 'Custom Color', color: '#F5F5DC' }
+    ],
+    hasColorWheel: true
   }
 ]
 
 export default function TraitSelector({ traits, onTraitChange }: TraitSelectorProps) {
   const [activeCategory, setActiveCategory] = useState<TraitCategory>('head')
+  const [customColors, setCustomColors] = useState<Record<TraitCategory, string>>({
+    head: '#F5F5DC',
+    eyes: '#000000',
+    glasses: '#000000',
+    shirt: '#FF6B35',
+    pants: '#3B82F6',
+    shoes: '#000000',
+    accessories: '#000000',
+    background: '#F5F5DC',
+    hat: '#000000',
+    bowtie: '#000000'
+  })
+
+  const handleColorChange = (category: TraitCategory, color: string) => {
+    setCustomColors(prev => ({ ...prev, [category]: color }))
+    onTraitChange(category, `custom-${color.replace('#', '')}`)
+  }
 
   return (
     <div className="space-y-6">
@@ -143,6 +192,17 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
               </button>
             ))}
         </div>
+
+        {/* Color Wheel for customizable categories */}
+        {traitCategories.find(c => c.category === activeCategory)?.hasColorWheel && (
+          <div className="mt-4 p-4 bg-white dark:bg-candle-dark rounded-lg border border-gray-200 dark:border-candle-orange/20">
+            <h5 className="text-sm font-medium text-candle-dark dark:text-white mb-3 font-ai">Custom Color</h5>
+            <ColorWheel
+              color={customColors[activeCategory]}
+              onChange={(color) => handleColorChange(activeCategory, color)}
+            />
+          </div>
+        )}
       </div>
 
       {/* Quick Actions */}
@@ -165,8 +225,7 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
               onTraitChange('shirt', 'orange')
               onTraitChange('eyes', 'default')
               onTraitChange('glasses', 'none')
-              onTraitChange('pants', 'default')
-              onTraitChange('shoes', 'default')
+              onTraitChange('background', 'default')
               onTraitChange('accessories', 'none')
             }}
             className="px-4 py-2 bg-gradient-to-r from-candle-orange to-candle-orange-light text-white rounded-lg hover:from-candle-orange-light hover:to-candle-orange-lighter transition-all duration-200 shadow-candle-glow hover:shadow-orange-glow font-ai"
@@ -177,4 +236,4 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
       </div>
     </div>
   )
-} 
+}
