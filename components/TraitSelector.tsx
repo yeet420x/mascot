@@ -83,6 +83,42 @@ const traitCategories = [
     hasColorWheel: true
   },
   {
+    category: 'pants' as TraitCategory,
+    label: 'Pants Style',
+    options: [
+      { id: 'default', name: 'Default', color: '#3B82F6' },
+      { id: 'jeans', name: 'Jeans', color: '#1E40AF' },
+      { id: 'khakis', name: 'Khakis', color: '#92400E' },
+      { id: 'chinos', name: 'Chinos', color: '#78350F' },
+      { id: 'slacks', name: 'Slacks', color: '#374151' },
+      { id: 'cargo-pants', name: 'Cargo Pants', color: '#059669' },
+      { id: 'sweatpants', name: 'Sweatpants', color: '#7C3AED' },
+      { id: 'joggers', name: 'Joggers', color: '#DC2626' },
+      { id: 'track-pants', name: 'Track Pants', color: '#EA580C' },
+      { id: 'shorts', name: 'Shorts', color: '#0891B2' },
+      { id: 'custom', name: 'Custom Style', color: '#3B82F6' }
+    ],
+    hasColorWheel: true
+  },
+  {
+    category: 'shoes' as TraitCategory,
+    label: 'Shoes Style',
+    options: [
+      { id: 'default', name: 'Default', color: '#000000' },
+      { id: 'sneakers', name: 'Sneakers', color: '#FFFFFF' },
+      { id: 'boots', name: 'Boots', color: '#8B4513' },
+      { id: 'dress-shoes', name: 'Dress Shoes', color: '#1F2937' },
+      { id: 'casual-shoes', name: 'Casual Shoes', color: '#6B7280' },
+      { id: 'athletic-shoes', name: 'Athletic Shoes', color: '#EF4444' },
+      { id: 'sandals', name: 'Sandals', color: '#F59E0B' },
+      { id: 'loafers', name: 'Loafers', color: '#10B981' },
+      { id: 'oxfords', name: 'Oxfords', color: '#3B82F6' },
+      { id: 'chelsea-boots', name: 'Chelsea Boots', color: '#8B5CF6' },
+      { id: 'custom', name: 'Custom Style', color: '#000000' }
+    ],
+    hasColorWheel: true
+  },
+  {
     category: 'accessories' as TraitCategory,
     label: 'Accessories',
     options: [
@@ -223,6 +259,8 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
             onClick={() => {
               onTraitChange('head', 'orange')
               onTraitChange('shirt', 'orange')
+              onTraitChange('pants', 'default')
+              onTraitChange('shoes', 'default')
               onTraitChange('eyes', 'default')
               onTraitChange('glasses', 'none')
               onTraitChange('background', 'default')

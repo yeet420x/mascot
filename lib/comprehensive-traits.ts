@@ -172,6 +172,89 @@ export const COMPREHENSIVE_TRAITS = {
     ]
   },
 
+  // PANTS STYLES
+  pants: {
+    // Basic Types
+    basic: [
+      'jeans', 'khakis', 'chinos', 'slacks', 'dress-pants', 'casual-pants', 'sweatpants',
+      'joggers', 'cargo-pants', 'track-pants', 'athletic-pants', 'yoga-pants', 'leggings',
+      'shorts', 'bermuda-shorts', 'athletic-shorts', 'dress-shorts', 'casual-shorts'
+    ],
+    
+    // Styles
+    styles: [
+      'skinny', 'slim-fit', 'straight-leg', 'bootcut', 'flared', 'wide-leg', 'baggy', 'loose-fit',
+      'relaxed-fit', 'comfort-fit', 'classic-fit', 'modern-fit', 'vintage', 'retro', 'trendy',
+      'hipster', 'professional', 'casual', 'formal', 'business', 'streetwear', 'athleisure'
+    ],
+    
+    // Colors
+    colors: [
+      'blue', 'black', 'gray', 'brown', 'khaki', 'white', 'navy', 'olive', 'tan', 'beige',
+      'cream', 'charcoal', 'dark-blue', 'light-blue', 'indigo', 'stone', 'camel', 'taupe',
+      'mushroom', 'sand', 'wheat', 'golden', 'bronze', 'copper', 'silver', 'platinum'
+    ],
+    
+    // Materials
+    materials: [
+      'denim', 'cotton', 'linen', 'wool', 'polyester', 'nylon', 'spandex', 'elastane',
+      'leather', 'suede', 'velvet', 'silk', 'satin', 'chiffon', 'tweed', 'corduroy',
+      'canvas', 'jersey', 'fleece', 'terry-cloth', 'mesh', 'vinyl', 'pleather', 'faux-leather'
+    ],
+    
+    // Patterns
+    patterns: [
+      'solid', 'stripes', 'plaid', 'checkered', 'pinstripes', 'herringbone', 'twill',
+      'camo', 'floral', 'geometric', 'abstract', 'tie-dye', 'batik', 'ikat', 'shibori',
+      'embroidery', 'beading', 'studs', 'patches', 'distressed', 'faded', 'vintage-wash'
+    ]
+  },
+
+  // SHOES STYLES
+  shoes: {
+    // Basic Types
+    basic: [
+      'sneakers', 'boots', 'dress-shoes', 'casual-shoes', 'athletic-shoes', 'sandals',
+      'flip-flops', 'loafers', 'oxfords', 'derbies', 'brogues', 'monk-straps', 'chelsea-boots',
+      'ankle-boots', 'mid-calf-boots', 'knee-high-boots', 'thigh-high-boots', 'mules', 'clogs'
+    ],
+    
+    // Athletic Shoes
+    athletic: [
+      'running-shoes', 'basketball-shoes', 'soccer-cleats', 'football-cleats', 'baseball-cleats',
+      'tennis-shoes', 'golf-shoes', 'hiking-boots', 'trail-running-shoes', 'cross-training-shoes',
+      'weightlifting-shoes', 'cycling-shoes', 'climbing-shoes', 'swimming-shoes', 'dance-shoes'
+    ],
+    
+    // Casual Shoes
+    casual: [
+      'canvas-sneakers', 'slip-ons', 'espadrilles', 'boat-shoes', 'driving-shoes', 'moccasins',
+      'ballet-flats', 'mary-janes', 'pumps', 'stilettos', 'wedges', 'platforms', 'chunky-soles',
+      'dad-shoes', 'retro-sneakers', 'vintage-shoes', 'streetwear-shoes', 'fashion-sneakers'
+    ],
+    
+    // Colors
+    colors: [
+      'white', 'black', 'brown', 'gray', 'navy', 'red', 'blue', 'green', 'yellow', 'pink',
+      'purple', 'orange', 'tan', 'beige', 'cream', 'charcoal', 'olive', 'burgundy', 'maroon',
+      'gold', 'silver', 'bronze', 'copper', 'platinum', 'chrome', 'metallic', 'neon', 'pastel'
+    ],
+    
+    // Materials
+    materials: [
+      'leather', 'suede', 'canvas', 'mesh', 'nylon', 'polyester', 'rubber', 'synthetic',
+      'cork', 'wood', 'metal', 'plastic', 'vinyl', 'pleather', 'faux-leather', 'fabric',
+      'denim', 'velvet', 'satin', 'silk', 'wool', 'cotton', 'linen', 'jute', 'hemp'
+    ],
+    
+    // Styles
+    styles: [
+      'minimalist', 'maximalist', 'vintage', 'retro', 'modern', 'classic', 'trendy', 'hipster',
+      'luxury', 'premium', 'exclusive', 'limited', 'custom', 'bespoke', 'artisan', 'handcrafted',
+      'mass-produced', 'industrial', 'sustainable', 'eco-friendly', 'vegan', 'cruelty-free'
+    ]
+  },
+
   // ACCESSORIES
   accessories: {
     // Jewelry

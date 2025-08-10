@@ -50,6 +50,13 @@ export default function BaseMascotTemplate({ traits, onTraitChange }: BaseMascot
     { name: 'Orange Pants', value: 'orange' }
   ]
 
+  const shoesColors = [
+    { name: 'Black Shoes', value: 'black' },
+    { name: 'White Shoes', value: 'white' },
+    { name: 'Brown Shoes', value: 'brown' },
+    { name: 'Blue Shoes', value: 'blue' }
+  ]
+
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-2">
@@ -181,6 +188,26 @@ export default function BaseMascotTemplate({ traits, onTraitChange }: BaseMascot
               ))}
             </div>
           </div>
+
+          {/* Shoes */}
+          <div>
+            <h4 className="font-semibold text-candle-dark mb-3">Shoes Color:</h4>
+            <div className="grid grid-cols-2 gap-2">
+              {shoesColors.map((color) => (
+                <button
+                  key={color.value}
+                  onClick={() => onTraitChange('shoes', color.value)}
+                  className={`p-3 rounded-lg border-2 transition-all ${
+                    traits.shoes === color.value
+                      ? 'border-candle-orange bg-candle-light'
+                      : 'border-gray-200 hover:border-candle-orange'
+                  }`}
+                >
+                  <span className="text-sm text-candle-dark">{color.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
@@ -189,7 +216,7 @@ export default function BaseMascotTemplate({ traits, onTraitChange }: BaseMascot
         <h4 className="font-semibold text-candle-dark mb-2">🎨 Design Notes:</h4>
         <ul className="text-sm text-candle-dark space-y-1">
           <li>• <strong>Fixed Elements:</strong> Candle TV head, chibi body style, confident pose</li>
-          <li>• <strong>Customizable:</strong> Background, glasses, hat, bowtie, pants colors</li>
+          <li>• <strong>Customizable:</strong> Background, glasses, hat, bowtie, pants, and shoes colors</li>
           <li>• <strong>Style:</strong> Clean vector-style with bold outlines</li>
           <li>• <strong>Branding:</strong> Maintains Candle TV identity with orange/black theme</li>
         </ul>
