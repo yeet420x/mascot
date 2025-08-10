@@ -90,168 +90,121 @@ export default function PromptBasedGenerator({ onTraitsGenerated, onGenerate }: 
     <div className="space-y-6">
       <div className="flex items-center space-x-2">
         <Sparkles className="text-candle-orange" size={24} />
-        <h3 className="text-xl font-bold text-candle-dark">AI-Powered Mascot Generator</h3>
+        <h3 className="text-xl font-bold text-candle-dark dark:text-white">AI-Powered Mascot Generator</h3>
       </div>
 
       {/* Enhanced Instructions */}
-      <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
+      <div className="bg-gradient-to-r from-candle-orange/10 to-candle-orange-light/10 dark:from-candle-orange/20 dark:to-candle-orange-light/20 border border-candle-orange/20 rounded-lg p-4">
         <div className="flex items-start space-x-2">
-          <Zap className="text-blue-600 mt-1" size={20} />
+          <Zap className="text-candle-orange mt-1" size={20} />
           <div>
-            <h4 className="font-semibold text-blue-800 mb-2">🎨 Complete Freedom to Describe Your Mascot:</h4>
-            <p className="text-blue-700 text-sm mb-3">
-              Describe your mascot in any way you want! Our AI will intelligently extract colors, accessories, and styles from your description.
-            </p>
-            <div className="bg-yellow-50 border border-yellow-200 rounded p-2 mb-3">
-              <p className="text-yellow-800 text-xs font-medium">💡 <strong>Face Styles Note:</strong> Creative styles like "doge", "goku", "matrix" are displayed <em>inside</em> the mascot's screen/face, not replacing the entire face structure.</p>
-            </div>
-            <div className="text-blue-700 text-sm">
-              <p className="font-medium mb-2">What the AI can understand:</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-600" size={14} />
-                  <span><strong>Colors:</strong> Any color name (red, blue, green, etc.)</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-600" size={14} />
-                  <span><strong>Accessories:</strong> crown, necklace, watch, bracelet, etc.</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-600" size={14} />
-                  <span><strong>Clothing:</strong> shirts, pants, shoes, hats, glasses</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-600" size={14} />
-                  <span><strong>Styles:</strong> round glasses, square glasses, etc.</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-600" size={14} />
-                  <span><strong>Face Styles:</strong> pepe, doge, goku, matrix, anime, pixel (inside screen)</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-600" size={14} />
-                  <span><strong>Backgrounds:</strong> matrix, cyber, neon, space, fantasy themes</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-600" size={14} />
-                  <span><strong>Weapons:</strong> lightsaber, sword, dagger, bow, gun, staff</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-600" size={14} />
-                  <span><strong>Memes:</strong> pepe, doge, wojak, chad, virgin, stonks</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-600" size={14} />
-                  <span><strong>Anime:</strong> goku, naruto, luffy, saitama, deku, allmight</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-600" size={14} />
-                  <span><strong>Gaming:</strong> minecraft, roblox, fortnite, valorant, pokemon</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-600" size={14} />
-                  <span><strong>Sci-fi:</strong> lightsaber, blaster, alien, space, galaxy, robot</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="text-green-600" size={14} />
-                  <span><strong>Fantasy:</strong> dragon, unicorn, wizard, elf, fairy, magic</span>
-                </div>
-              </div>
-            </div>
+            <h4 className="font-semibold text-candle-dark dark:text-white mb-2">How it works:</h4>
+            <ul className="text-sm text-candle-dark dark:text-candle-light space-y-1">
+              <li>• Describe your mascot in natural language</li>
+              <li>• AI will automatically extract and map traits</li>
+              <li>• Review and adjust the generated traits</li>
+              <li>• Generate your custom mascot!</li>
+            </ul>
           </div>
-        </div>
-      </div>
-
-      {/* Enhanced Example Prompts */}
-      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-        <h4 className="font-semibold text-gray-800 mb-2">💡 Example prompts (be creative!):</h4>
-        <div className="space-y-2 text-sm text-gray-700">
-          <p>• "A pepe face mascot with neon eyes, cyber glasses, wearing a black shirt and red pants holding a lightsaber"</p>
-          <p>• "A goku face mascot with anime eyes, pixel style, purple shirt and green pants with a crown"</p>
-          <p>• "A doge face mascot with glowing eyes, tech glasses, wearing a white jacket and blue jeans"</p>
-          <p>• "A matrix face mascot with digital eyes, cyber background, holding a blaster and wearing armor"</p>
-          <p>• "A chad face mascot with laser eyes, metallic glasses, wearing a gold shirt and silver pants with a sword"</p>
-          <p>• "A wojak face mascot with sad eyes, vintage glasses, wearing a gray hoodie and black pants"</p>
         </div>
       </div>
 
       {/* Prompt Input */}
       <div className="space-y-3">
-        <label htmlFor="prompt" className="block text-sm font-medium text-candle-dark">
-          Describe your mascot (be as creative as you want!):
+        <label htmlFor="prompt" className="block text-sm font-medium text-candle-dark dark:text-white">
+          Describe your mascot:
         </label>
         <textarea
           id="prompt"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Describe your mascot here... (e.g., 'A majestic mascot with golden hair, emerald eyes, wearing a royal purple shirt with a silver crown')"
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-candle-orange focus:border-transparent resize-none"
-          rows={4}
+          placeholder="e.g., 'A friendly orange mascot with blue eyes, wearing a red shirt and blue jeans' with a hat"
+          className="w-full h-32 px-4 py-3 border-2 border-candle-orange/30 rounded-xl resize-none focus:border-candle-orange focus:outline-none transition-colors duration-200 bg-white dark:bg-candle-dark text-candle-dark dark:text-candle-light placeholder-gray-400 dark:placeholder-gray-500"
         />
       </div>
-
-      {/* Error Display */}
-      {error && (
-        <div className="flex items-center space-x-2 p-3 bg-red-50 border border-red-200 rounded-lg">
-          <AlertCircle className="text-red-600" size={20} />
-          <p className="text-red-600 text-sm">{error}</p>
-        </div>
-      )}
 
       {/* Generate Button */}
       <button
         onClick={handleGenerateFromPrompt}
         disabled={isProcessing || !prompt.trim()}
-        className="w-full flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-candle-orange to-purple-600 text-white rounded-lg hover:from-candle-accent hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-gradient-to-r from-candle-orange via-candle-orange-light to-candle-orange-lighter text-white font-bold py-3 px-6 rounded-xl shadow-candle-glow hover:shadow-orange-glow transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:hover:scale-100"
       >
         {isProcessing ? (
-          <>
+          <div className="flex items-center justify-center space-x-2">
             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-            <span>AI Processing Your Description...</span>
-          </>
+            <span>Processing...</span>
+          </div>
         ) : (
-          <>
+          <div className="flex items-center justify-center space-x-2">
             <Sparkles size={20} />
-            <span>Generate Mascot from Description</span>
-          </>
+            <span>Generate Traits</span>
+          </div>
         )}
       </button>
 
-      {/* Extracted Information Display */}
-      {extractedInfo.length > 0 && (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <h4 className="font-semibold text-yellow-800 mb-3">🔍 AI Extracted Information:</h4>
-          <div className="space-y-1 text-sm">
-            {extractedInfo.map((info, index) => (
-              <div key={index} className="flex items-center space-x-2">
-                <CheckCircle className="text-yellow-600" size={14} />
-                <span className="text-yellow-700">{info}</span>
-              </div>
-            ))}
+      {/* Error Display */}
+      {error && (
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+          <div className="flex items-center space-x-2">
+            <AlertCircle className="text-red-600 dark:text-red-400" size={20} />
+            <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
           </div>
         </div>
       )}
 
       {/* Generated Traits Display */}
       {generatedTraits && (
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-          <h4 className="font-semibold text-green-800 mb-3">✨ Generated Traits:</h4>
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            {Object.entries(generatedTraits).map(([key, value]) => (
-              <div key={key} className="flex justify-between">
-                <span className="text-green-700 capitalize">{key}:</span>
-                <span className="text-green-800 font-medium">{value}</span>
-              </div>
-            ))}
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4">
+          <div className="flex items-center space-x-2 mb-3">
+            <CheckCircle className="text-green-600 dark:text-green-400" size={20} />
+            <h4 className="font-semibold text-green-800 dark:text-green-200">Traits Generated Successfully!</h4>
           </div>
+          
+          <div className="space-y-2">
+            <p className="text-sm text-green-700 dark:text-green-300">
+              AI extracted the following traits from your description:
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {extractedInfo.map((info, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 bg-green-100 dark:bg-green-800/30 text-green-800 dark:text-green-200 text-xs rounded-full border border-green-200 dark:border-green-700"
+                >
+                  {info}
+                </span>
+              ))}
+            </div>
+          </div>
+
           <button
             onClick={handleUseTraits}
-            className="mt-3 w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+            className="mt-4 w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white font-medium py-2 px-4 rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-200 hover:scale-105"
           >
             Use These Traits
           </button>
         </div>
       )}
+
+      {/* Example Prompts */}
+      <div className="bg-gradient-to-r from-candle-light/50 to-candle-peach/50 dark:from-candle-dark/50 dark:to-candle-dark/50 border border-candle-orange/20 rounded-lg p-4">
+        <div className="flex items-start space-x-2">
+          <Lightbulb className="text-candle-orange mt-1" size={20} />
+          <div>
+            <h4 className="font-semibold text-candle-dark dark:text-white mb-2">Example prompts:</h4>
+            <div className="text-sm text-candle-dark dark:text-candle-light space-y-2">
+              <div className="p-2 bg-white dark:bg-candle-dark/50 rounded border border-candle-orange/20">
+                "A cheerful orange mascot with big blue eyes, wearing a red shirt and blue jeans"
+              </div>
+              <div className="p-2 bg-white dark:bg-candle-dark/50 rounded border border-candle-orange/20">
+                "A sophisticated mascot with round glasses, a bow tie, and a hat"
+              </div>
+              <div className="p-2 bg-white dark:bg-candle-dark/50 rounded border border-candle-orange/20">
+                "A sporty mascot with sunglasses, athletic wear, and sneakers"
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 } 

@@ -117,94 +117,119 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
   }
 
   const getUmi = () => {
-    return createUmi(rpcUrl)
+    const umi = createUmi(rpcUrl)
+    umi.use(mplTokenMetadata())
+    return umi
   }
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-6xl mx-auto p-6 space-y-8">
+      {/* Enhanced Header Section */}
+      <div className="text-center space-y-4">
+        <h2 className="text-4xl font-bold logo-text dark:text-white">
+          Create Your Mascot
+        </h2>
+        <p className="text-lg text-candle-orange-light dark:text-candle-orange-lighter font-fancy">
+          Design the perfect Candle TV mascot with our AI-powered generator
+        </p>
+      </div>
+
       {/* Tab Navigation */}
-      <div className="flex space-x-1 bg-gray-100 rounded-lg p-1">
-      <button
+      <div className="flex justify-center space-x-2">
+        <button
           onClick={() => setActiveTab('manual')}
-          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+          className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
             activeTab === 'manual'
-              ? 'bg-white text-gray-900 shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'
+              ? 'bg-gradient-to-r from-candle-orange to-candle-orange-light text-white shadow-candle-glow'
+              : 'bg-white dark:bg-candle-dark text-candle-orange border-2 border-candle-orange hover:bg-candle-orange hover:text-white'
           }`}
         >
           Manual Selection
-              </button>
-              <button
+        </button>
+        <button
           onClick={() => setActiveTab('prompt')}
-          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+          className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
             activeTab === 'prompt'
-              ? 'bg-white text-gray-900 shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'
+              ? 'bg-gradient-to-r from-candle-orange to-candle-orange-light text-white shadow-candle-glow'
+              : 'bg-white dark:bg-candle-dark text-candle-orange border-2 border-candle-orange hover:bg-candle-orange hover:text-white'
           }`}
         >
-          <MessageSquare className="inline mr-2" size={16} />
           AI Prompt
-              </button>
+        </button>
       </div>
 
-      {/* Tab Content */}
-      {activeTab === 'manual' ? (
-        <TraitSelector traits={traits} onTraitChange={handleTraitChange} />
-      ) : (
-        <PromptBasedGenerator onTraitsGenerated={handleTraitsGenerated} onGenerate={handleGenerate} />
-      )}
-
-      {/* Generate Button */}
-      {activeTab === 'manual' && (
-      <button
-          onClick={handleGenerate}
-        disabled={isGenerating}
-          className="w-full flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-candle-orange to-purple-600 text-white rounded-lg hover:from-candle-accent hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {isGenerating ? (
-          <>
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-            <span>Generating Mascot...</span>
-          </>
-        ) : (
-          <>
-              <span>Generate Mascot</span>
-          </>
-        )}
-      </button>
-      )}
-
-      {/* Error Display */}
-      {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-red-600 text-sm">{error}</p>
+      {/* Main Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Left Column - Trait Selection */}
+        <div className="space-y-6">
+          {activeTab === 'manual' ? (
+            <div className="bg-white dark:bg-candle-dark rounded-2xl p-6 shadow-lg dark:shadow-dark-elegant border border-candle-orange/20">
+              <h3 className="text-2xl font-bold text-candle-dark dark:text-white mb-4 flex items-center space-x-2">
+                <MessageSquare className="text-candle-orange" size={24} />
+                <span>Customize Your Mascot</span>
+              </h3>
+              <TraitSelector traits={traits} onTraitChange={handleTraitChange} />
+            </div>
+          ) : (
+            <div className="bg-white dark:bg-candle-dark rounded-2xl p-6 shadow-lg dark:shadow-dark-elegant border border-candle-orange/20">
+              <PromptBasedGenerator onTraitsGenerated={handleTraitsGenerated} onGenerate={onGenerate} />
+            </div>
+          )}
         </div>
-      )}
 
-      {/* Generated Image */}
-      {generatedImageUrl && (
-        <div className="space-y-4">
-          <div className="bg-white border border-gray-200 rounded-lg p-4">
-            <img
-              src={generatedImageUrl}
-              alt="Generated Mascot"
-              className="w-full h-auto rounded-lg"
-            />
+        {/* Right Column - Preview and Generation */}
+        <div className="space-y-6">
+          {/* Generate Button */}
+          <div className="bg-white dark:bg-candle-dark rounded-2xl p-6 shadow-lg dark:shadow-dark-elegant border border-candle-orange/20">
+            <button
+              onClick={handleGenerate}
+              disabled={isGenerating}
+              className="w-full bg-gradient-to-r from-candle-orange via-candle-orange-light to-candle-orange-lighter text-white font-bold py-4 px-6 rounded-xl shadow-candle-glow hover:shadow-orange-glow transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            >
+              {isGenerating ? (
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                  <span>Generating...</span>
+                </div>
+              ) : (
+                <span className="text-lg">Generate Mascot</span>
+              )}
+            </button>
           </div>
 
-          <NFTMinter
-            imageUrl={generatedImageUrl}
-            description={`Candle TV Mascot with traits: ${JSON.stringify(traits)}`}
-          />
-        </div>
-      )}
+          {/* Error Display */}
+          {error && (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+              <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+            </div>
+          )}
 
-      {/* Saved Mascots */}
-      <SavedMascots 
-        savedMascots={[]} 
-        onLoadMascot={() => {}} 
-        onDeleteMascot={() => {}} 
-      />
+          {/* Generated Image Display */}
+          {generatedImageUrl && (
+            <div className="bg-white dark:bg-candle-dark rounded-2xl p-6 shadow-lg dark:shadow-dark-elegant border border-candle-orange/20">
+              <h3 className="text-xl font-bold text-candle-dark dark:text-white mb-4">Generated Mascot</h3>
+              <div className="space-y-4">
+                <img
+                  src={generatedImageUrl}
+                  alt="Generated mascot"
+                  className="w-full h-auto rounded-xl border-2 border-candle-orange/30"
+                />
+                <NFTMinter imageUrl={generatedImageUrl} />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Saved Mascots Section */}
+      <div className="bg-white dark:bg-candle-dark rounded-2xl p-6 shadow-lg dark:shadow-dark-elegant border border-candle-orange/20">
+        <h3 className="text-2xl font-bold text-candle-dark dark:text-white mb-4">Saved Mascots</h3>
+        <SavedMascots
+          savedMascots={[]}
+          onLoadMascot={() => {}}
+          onDeleteMascot={() => {}}
+        />
+      </div>
     </div>
   )
 } 

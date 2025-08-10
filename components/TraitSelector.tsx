@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { MascotTraits, TraitCategory } from '@/types/mascot'
+import { TraitCategory, MascotTraits } from '@/types/mascot'
 
 interface TraitSelectorProps {
   traits: MascotTraits
@@ -11,30 +11,24 @@ interface TraitSelectorProps {
 const traitCategories = [
   {
     category: 'head' as TraitCategory,
-    label: 'Head Color',
+    label: 'Head Style',
     options: [
-      { id: 'default', name: 'Default', color: '#FF6B35' },
+      { id: 'default', name: 'Default', color: '#F5F5DC' },
       { id: 'orange', name: 'Orange', color: '#FF6B35' },
       { id: 'blue', name: 'Blue', color: '#3B82F6' },
       { id: 'green', name: 'Green', color: '#10B981' },
       { id: 'red', name: 'Red', color: '#EF4444' },
-      { id: 'purple', name: 'Purple', color: '#8B5CF6' },
-      { id: 'yellow', name: 'Yellow', color: '#F59E0B' },
-      { id: 'pink', name: 'Pink', color: '#EC4899' },
-      { id: 'gray', name: 'Gray', color: '#6B7280' },
-      { id: 'black', name: 'Black', color: '#1F2937' },
     ]
   },
   {
     category: 'eyes' as TraitCategory,
     label: 'Eye Color',
     options: [
-      { id: 'default', name: 'Default', color: '#2C1810' },
+      { id: 'default', name: 'Default', color: '#000000' },
+      { id: 'brown', name: 'Brown', color: '#8B4513' },
       { id: 'blue', name: 'Blue', color: '#3B82F6' },
       { id: 'green', name: 'Green', color: '#10B981' },
-      { id: 'brown', name: 'Brown', color: '#8B4513' },
-      { id: 'gray', name: 'Gray', color: '#6B7280' },
-      { id: 'black', name: 'Black', color: '#1F2937' },
+      { id: 'hazel', name: 'Hazel', color: '#CD853F' },
     ]
   },
   {
@@ -42,51 +36,43 @@ const traitCategories = [
     label: 'Glasses',
     options: [
       { id: 'none', name: 'None', color: 'transparent' },
-      { id: 'round', name: 'Round', color: '#2C1810' },
-      { id: 'square', name: 'Square', color: '#2C1810' },
-      { id: 'sunglasses', name: 'Sunglasses', color: '#1F2937' },
+      { id: 'round', name: 'Round', color: '#6B7280' },
+      { id: 'square', name: 'Square', color: '#374151' },
+      { id: 'aviator', name: 'Aviator', color: '#1F2937' },
+      { id: 'sunglasses', name: 'Sunglasses', color: '#111827' },
     ]
   },
   {
     category: 'shirt' as TraitCategory,
     label: 'Shirt Color',
     options: [
-      { id: 'default', name: 'Default', color: '#FF6B35' },
+      { id: 'default', name: 'Default', color: '#F5F5DC' },
       { id: 'orange', name: 'Orange', color: '#FF6B35' },
       { id: 'blue', name: 'Blue', color: '#3B82F6' },
       { id: 'green', name: 'Green', color: '#10B981' },
       { id: 'red', name: 'Red', color: '#EF4444' },
-      { id: 'purple', name: 'Purple', color: '#8B5CF6' },
-      { id: 'yellow', name: 'Yellow', color: '#F59E0B' },
-      { id: 'pink', name: 'Pink', color: '#EC4899' },
-      { id: 'gray', name: 'Gray', color: '#6B7280' },
-      { id: 'black', name: 'Black', color: '#1F2937' },
-      { id: 'white', name: 'White', color: '#FFFFFF' },
     ]
   },
   {
     category: 'pants' as TraitCategory,
     label: 'Pants Color',
     options: [
-      { id: 'default', name: 'Default', color: '#2C1810' },
+      { id: 'default', name: 'Default', color: '#F5F5DC' },
       { id: 'blue', name: 'Blue', color: '#3B82F6' },
-      { id: 'black', name: 'Black', color: '#1F2937' },
-      { id: 'gray', name: 'Gray', color: '#6B7280' },
+      { id: 'black', name: 'Black', color: '#000000' },
       { id: 'brown', name: 'Brown', color: '#8B4513' },
-      { id: 'green', name: 'Green', color: '#10B981' },
-      { id: 'red', name: 'Red', color: '#EF4444' },
+      { id: 'gray', name: 'Gray', color: '#6B7280' },
     ]
   },
   {
     category: 'shoes' as TraitCategory,
-    label: 'Shoes Color',
+    label: 'Shoe Color',
     options: [
-      { id: 'default', name: 'Default', color: '#1F2937' },
-      { id: 'black', name: 'Black', color: '#1F2937' },
+      { id: 'default', name: 'Default', color: '#F5F5DC' },
+      { id: 'black', name: 'Black', color: '#000000' },
       { id: 'brown', name: 'Brown', color: '#8B4513' },
       { id: 'white', name: 'White', color: '#FFFFFF' },
       { id: 'red', name: 'Red', color: '#EF4444' },
-      { id: 'blue', name: 'Blue', color: '#3B82F6' },
     ]
   },
   {
@@ -107,7 +93,7 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
 
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-bold text-candle-dark mb-4">Customize Your Mascot</h3>
+      <h3 className="text-xl font-bold text-candle-dark dark:text-white mb-4">Customize Your Mascot</h3>
       
       {/* Category Tabs */}
       <div className="flex flex-wrap gap-2">
@@ -115,10 +101,10 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
           <button
             key={category.category}
             onClick={() => setActiveCategory(category.category)}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
               activeCategory === category.category
-                ? 'bg-candle-orange text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-gradient-to-r from-candle-orange to-candle-orange-light text-white shadow-candle-glow'
+                : 'bg-gray-100 dark:bg-candle-dark text-gray-700 dark:text-candle-light hover:bg-gray-200 dark:hover:bg-candle-dark/80 border border-gray-200 dark:border-candle-orange/20'
             }`}
           >
             {category.label}
@@ -128,7 +114,7 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
 
       {/* Options for selected category */}
       <div className="space-y-4">
-        <h4 className="font-semibold text-candle-dark">
+        <h4 className="font-semibold text-candle-dark dark:text-white">
           {traitCategories.find(c => c.category === activeCategory)?.label}
         </h4>
         
@@ -139,18 +125,18 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
               <button
                 key={option.id}
                 onClick={() => onTraitChange(activeCategory, option.id)}
-                className={`p-3 rounded-lg border-2 transition-all trait-button ${
+                className={`p-3 rounded-lg border-2 transition-all duration-200 trait-button ${
                   traits[activeCategory] === option.id
-                    ? 'border-candle-orange bg-candle-light'
-                    : 'border-gray-200 hover:border-candle-accent'
+                    ? 'border-candle-orange bg-candle-light dark:bg-candle-orange/20 shadow-candle-glow'
+                    : 'border-gray-200 dark:border-candle-orange/20 hover:border-candle-accent dark:hover:border-candle-orange-light bg-white dark:bg-candle-dark'
                 }`}
               >
                 <div className="flex flex-col items-center space-y-2">
                   <div
-                    className="w-8 h-8 rounded-full border-2 border-gray-300"
+                    className="w-8 h-8 rounded-full border-2 border-gray-300 dark:border-candle-orange/30"
                     style={{ backgroundColor: option.color }}
                   />
-                  <span className="text-sm font-medium text-candle-dark">
+                  <span className="text-sm font-medium text-candle-dark dark:text-candle-light">
                     {option.name}
                   </span>
                 </div>
@@ -160,8 +146,8 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
       </div>
 
       {/* Quick Actions */}
-      <div className="pt-4 border-t border-gray-200">
-        <h4 className="font-semibold text-candle-dark mb-3">Quick Actions</h4>
+      <div className="pt-4 border-t border-gray-200 dark:border-candle-orange/20">
+        <h4 className="font-semibold text-candle-dark dark:text-white mb-3">Quick Actions</h4>
         <div className="flex gap-2">
           <button
             onClick={() => {
@@ -169,7 +155,7 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
                 onTraitChange(trait as TraitCategory, 'default')
               })
             }}
-            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 bg-gray-100 dark:bg-candle-dark text-gray-700 dark:text-candle-light rounded-lg hover:bg-gray-200 dark:hover:bg-candle-dark/80 transition-all duration-200 border border-gray-200 dark:border-candle-orange/20"
           >
             Reset to Default
           </button>
@@ -183,7 +169,7 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
               onTraitChange('shoes', 'default')
               onTraitChange('accessories', 'none')
             }}
-            className="px-4 py-2 bg-candle-orange text-white rounded-lg hover:bg-candle-accent transition-colors"
+            className="px-4 py-2 bg-gradient-to-r from-candle-orange to-candle-orange-light text-white rounded-lg hover:from-candle-orange-light hover:to-candle-orange-lighter transition-all duration-200 shadow-candle-glow hover:shadow-orange-glow"
           >
             Candle TV Theme
           </button>

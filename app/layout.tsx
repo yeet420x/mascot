@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <DynamicWalletProvider>
-          <div className="min-h-screen bg-gradient-to-br from-candle-light via-white to-candle-orange">
+          <div className="min-h-screen transition-all duration-300">
             {children}
           </div>
         </DynamicWalletProvider>
