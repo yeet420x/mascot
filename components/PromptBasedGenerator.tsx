@@ -108,7 +108,7 @@ export default function PromptBasedGenerator({ onTraitsGenerated, onGenerate }: 
 
       {/* Prompt Input */}
       <div className="space-y-3">
-        <label htmlFor="prompt" className="block text-sm font-medium text-candle-dark dark:text-white font-ai">
+        <label htmlFor="prompt" className="block text-lg font-semibold text-candle-dark dark:text-white font-ai">
           Describe your mascot:
         </label>
         <textarea
@@ -116,7 +116,7 @@ export default function PromptBasedGenerator({ onTraitsGenerated, onGenerate }: 
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="e.g., 'A friendly orange mascot with blue eyes, wearing a red shirt and blue jeans, on a blue background with a hat'"
-          className="w-full h-32 px-4 py-3 border-2 border-candle-orange/30 rounded-xl resize-none focus:border-candle-orange focus:outline-none transition-colors duration-200 bg-white dark:bg-candle-dark text-candle-dark dark:text-candle-light placeholder-gray-400 dark:placeholder-gray-500 font-ai"
+          className="w-full h-32 px-4 py-3 border-2 border-candle-orange/30 rounded-xl resize-none focus:border-candle-orange focus:outline-none transition-colors duration-200 bg-white dark:bg-candle-dark text-candle-dark dark:text-candle-light placeholder-gray-400 dark:placeholder-gray-500 font-ai text-base"
         />
         <p className="text-xs text-candle-dark/60 dark:text-white/60 font-ai">
           💡 <strong>Tip:</strong> Include background details like "on a blue background", "in a forest setting", "with a sunset behind", or "in space" for better results!
