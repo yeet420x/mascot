@@ -52,7 +52,7 @@ export default function Header() {
             
             {/* Enhanced Social Links */}
             <a
-              href="https://twitter.com/candletv"
+              href="https://x.com/CandleMascots"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-candle-orange to-candle-orange-light text-white rounded-lg hover:from-candle-orange-light hover:to-candle-orange-lighter transition-all duration-300 trait-button group"

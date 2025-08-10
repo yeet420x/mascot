@@ -38,10 +38,17 @@ export async function POST(request: NextRequest) {
   "pants": "color or 'blue'",
   "shoes": "color or 'black'",
   "accessories": "item or 'none'",
-  "background": "color/theme or '#F5F5DC'",
+  "background": "color/theme or 'white'",
   "hat": "type or 'none'",
   "bowtie": "color or 'none'"
 }
+
+**CRITICAL BACKGROUND RULES:**
+- **NEVER default to 'black' background unless explicitly mentioned**
+- **If no background is specified, use 'white' as default**
+- **Look for ANY mention of background, environment, or setting**
+- **Common background indicators: 'on', 'in', 'with', 'against', 'background', 'setting', 'environment'**
+- **Examples: 'on a blue background' → background: 'blue', 'in a forest' → background: 'forest'**
 
 **COMPREHENSIVE TRAIT DATABASE - ALL POSSIBLE VALUES:**
 
@@ -60,7 +67,7 @@ ${allTraitValues.clothing.join(', ')}
 **ACCESSORIES:**
 ${allTraitValues.accessories.join(', ')}
 
-**BACKGROUND THEMES:**
+**BACKGROUND THEMES (IMPORTANT - Look carefully for these):**
 ${allTraitValues.background.join(', ')}
 
 **HAT TYPES:**
@@ -69,16 +76,21 @@ ${allTraitValues.hat.join(', ')}
 **BOWTIE COLORS:**
 ${allTraitValues.bowtie.join(', ')}
 
-**SPECIAL CASES & CREATIVE CONCEPTS:**
-- **Physical Features:** sharp-jawline, strong-jaw, defined-jaw, angular-face, square-jaw, chiseled
-- **Memes:** pepe, doge, wojak, chad, virgin, stonks, cheems, bonk, kek, monke, cat, dog, frog, rare
-- **Anime:** goku, naruto, luffy, saitama, deku, allmight, vegeta, anime, manga, otaku, weeb
-- **Gaming:** minecraft, roblox, fortnite, valorant, csgo, league, dota, overwatch, pokemon, pixel, 8bit
-- **Sci-fi:** lightsaber, blaster, phaser, laser, plasma, energy, force, jedi, sith, star-wars, star-trek
-- **Fantasy:** sword, dagger, bow, arrow, staff, wand, shield, axe, hammer, magic, spell, potion
-- **Tech:** matrix, cyber, digital, neon, glitch, hologram, vr, ar, ai, robot, android, cyborg
-- **Materials:** metallic, chrome, gold, silver, bronze, crystal, diamond, obsidian, marble, wood, stone
-- **Effects:** glowing, neon, laser, fire, ice, electric, rainbow, prismatic, hypnotic, demonic, angelic
+**BACKGROUND DETECTION EXAMPLES:**
+- "mascot on a blue background" → background: "blue"
+- "mascot in a forest setting" → background: "forest"
+- "mascot against a white wall" → background: "white"
+- "mascot with a sunset behind" → background: "sunset"
+- "mascot in space" → background: "space"
+- "mascot on a beach" → background: "beach"
+- "mascot in a city" → background: "city"
+- "mascot with a galaxy background" → background: "galaxy"
+- "mascot in a cyberpunk setting" → background: "cyber"
+- "mascot with a neon background" → background: "neon"
+- "mascot in a fantasy world" → background: "fantasy"
+- "mascot with a geometric pattern" → background: "geometric"
+- "mascot on a gradient background" → background: "gradients"
+- "mascot with a solid color background" → background: "solid"
 
 **CONTEXT UNDERSTANDING:**
 - If "sharp jawline" is mentioned, set head to "sharp-jawline"
@@ -161,13 +173,31 @@ ${allTraitValues.bowtie.join(', ')}
       pants: 'blue',
       shoes: 'black',
       accessories: 'none',
-      background: '#F5F5DC',
+      background: 'white', // Changed from '#F5F5DC' to 'white' for better AI recognition
       hat: 'none',
       bowtie: 'none'
     }
 
     // Merge with defaults and validate
     const finalTraits = { ...defaultTraits, ...traits }
+
+    // Special handling for background to prevent black default
+    if (finalTraits.background === 'black' && !description.toLowerCase().includes('black') && !description.toLowerCase().includes('dark')) {
+      // If AI defaulted to black but it wasn't mentioned, try to find a better background
+      const backgroundKeywords = ['blue', 'green', 'red', 'yellow', 'white', 'orange', 'purple', 'pink', 'forest', 'beach', 'space', 'city', 'nature', 'sunset', 'sunrise', 'sky', 'ocean', 'mountain', 'galaxy', 'stars', 'neon', 'cyber', 'fantasy', 'abstract']
+      
+      for (const keyword of backgroundKeywords) {
+        if (description.toLowerCase().includes(keyword)) {
+          finalTraits.background = keyword
+          break
+        }
+      }
+      
+      // If still no good match, default to white instead of black
+      if (finalTraits.background === 'black') {
+        finalTraits.background = 'white'
+      }
+    }
 
     return NextResponse.json({
       traits: finalTraits,

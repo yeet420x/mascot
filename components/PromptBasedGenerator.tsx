@@ -115,9 +115,31 @@ export default function PromptBasedGenerator({ onTraitsGenerated, onGenerate }: 
           id="prompt"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="e.g., 'A friendly orange mascot with blue eyes, wearing a red shirt and blue jeans' with a hat"
+          placeholder="e.g., 'A friendly orange mascot with blue eyes, wearing a red shirt and blue jeans, on a blue background with a hat'"
           className="w-full h-32 px-4 py-3 border-2 border-candle-orange/30 rounded-xl resize-none focus:border-candle-orange focus:outline-none transition-colors duration-200 bg-white dark:bg-candle-dark text-candle-dark dark:text-candle-light placeholder-gray-400 dark:placeholder-gray-500 font-ai"
         />
+        <p className="text-xs text-candle-dark/60 dark:text-white/60 font-ai">
+          💡 <strong>Tip:</strong> Include background details like "on a blue background", "in a forest setting", "with a sunset behind", or "in space" for better results!
+        </p>
+      </div>
+
+      {/* Example Prompts */}
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+        <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2 font-ai">Example Prompts:</h4>
+        <div className="space-y-2">
+          <div className="text-xs text-blue-700 dark:text-blue-300 font-ai">
+            🎨 <strong>With Background:</strong> "A cheerful orange mascot with big blue eyes, wearing a red shirt and blue jeans, on a sunny beach background"
+          </div>
+          <div className="text-xs text-blue-700 dark:text-blue-300 font-ai">
+            🌟 <strong>Creative Setting:</strong> "A sophisticated mascot with round glasses, a bow tie, and a hat, in a magical forest setting"
+          </div>
+          <div className="text-xs text-blue-700 dark:text-blue-300 font-ai">
+            🚀 <strong>Space Theme:</strong> "A sporty mascot with sunglasses, athletic wear, and sneakers, floating in space with stars"
+          </div>
+          <div className="text-xs text-blue-700 dark:text-blue-300 font-ai">
+            🎭 <strong>Colorful Background:</strong> "A friendly mascot with green eyes, wearing a purple shirt, on a bright yellow background"
+          </div>
+        </div>
       </div>
 
       {/* Generate Button */}
