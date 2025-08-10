@@ -109,12 +109,6 @@ export default function BalanceDisplay() {
           >
             Refresh Balance
           </button>
-          <button className="px-4 py-2 bg-white dark:bg-candle-dark text-candle-orange border border-candle-orange text-sm font-medium rounded-lg hover:bg-candle-orange hover:text-white transition-all duration-200 hover:scale-105">
-            View NFTs
-          </button>
-          <button className="px-4 py-2 bg-white dark:bg-candle-dark text-candle-orange border border-candle-orange text-sm font-medium rounded-lg hover:bg-candle-orange hover:text-white transition-all duration-200 hover:scale-105">
-            Transaction History
-          </button>
         </div>
       </div>
     </div>
