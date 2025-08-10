@@ -188,13 +188,13 @@ export default function NFTMinter({ imageUrl, description = 'AI-Generated Candle
   return (
     <div className="space-y-4">
       <div className="p-4 bg-white rounded-lg shadow">
-        <h3 className="text-lg font-semibold mb-4">🎨 NFT Minter</h3>
+        <h3 className="text-lg font-semibold mb-4 font-ai">🎨 NFT Minter</h3>
 
         {/* Main Action Button */}
         <button
           onClick={mintNFT}
           disabled={isLoading || !walletPubkey}
-          className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50"
+          className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 font-ai"
         >
           {isLoading ? status || 'Processing...' : 'Create NFT'}
         </button>
@@ -210,12 +210,12 @@ export default function NFTMinter({ imageUrl, description = 'AI-Generated Candle
           <div className="mt-4 p-3 bg-green-100 text-green-700 rounded-lg">
             <div className="flex items-center">
               <span className="text-lg mr-2">✨</span>
-              <span className="font-semibold">NFT Minted Successfully!</span>
+              <span className="font-semibold font-ai">NFT Minted Successfully!</span>
             </div>
             
             <div className="mt-3 space-y-2">
               <div className="text-sm">
-                <span className="font-medium">NFT: </span>
+                <span className="font-medium font-ai">NFT: </span>
                 <a 
                   href={`https://solscan.io/token/${mintAddress}`}
                   target="_blank"
@@ -227,7 +227,7 @@ export default function NFTMinter({ imageUrl, description = 'AI-Generated Candle
               </div>
 
               <div className="text-sm">
-                <span className="font-medium">Transaction: </span>
+                <span className="font-medium font-ai">Transaction: </span>
                 <a 
                   href={`https://solscan.io/tx/${txSignature}`}
                   target="_blank"

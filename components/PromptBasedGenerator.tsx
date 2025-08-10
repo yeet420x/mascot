@@ -90,7 +90,7 @@ export default function PromptBasedGenerator({ onTraitsGenerated, onGenerate }: 
     <div className="space-y-6">
       <div className="flex items-center space-x-2">
         <Sparkles className="text-candle-orange" size={24} />
-        <h3 className="text-xl font-bold text-candle-dark dark:text-white">AI-Powered Mascot Generator</h3>
+        <h3 className="text-xl font-bold text-candle-dark dark:text-white font-ai">AI-Powered Mascot Generator</h3>
       </div>
 
       {/* Enhanced Instructions */}
@@ -98,20 +98,17 @@ export default function PromptBasedGenerator({ onTraitsGenerated, onGenerate }: 
         <div className="flex items-start space-x-2">
           <Zap className="text-candle-orange mt-1" size={20} />
           <div>
-            <h4 className="font-semibold text-candle-dark dark:text-white mb-2">How it works:</h4>
-            <ul className="text-sm text-candle-dark dark:text-candle-light space-y-1">
-              <li>• Describe your mascot in natural language</li>
-              <li>• AI will automatically extract and map traits</li>
-              <li>• Review and adjust the generated traits</li>
-              <li>• Generate your custom mascot!</li>
-            </ul>
+            <h4 className="font-semibold text-candle-dark dark:text-white mb-2 font-ai">How it works:</h4>
+            <p className="text-sm text-candle-dark/80 dark:text-white/80 font-ai">
+              Describe your mascot in natural language, and our AI will automatically extract the traits and create your custom mascot.
+            </p>
           </div>
         </div>
       </div>
 
       {/* Prompt Input */}
       <div className="space-y-3">
-        <label htmlFor="prompt" className="block text-sm font-medium text-candle-dark dark:text-white">
+        <label htmlFor="prompt" className="block text-sm font-medium text-candle-dark dark:text-white font-ai">
           Describe your mascot:
         </label>
         <textarea
@@ -119,7 +116,7 @@ export default function PromptBasedGenerator({ onTraitsGenerated, onGenerate }: 
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="e.g., 'A friendly orange mascot with blue eyes, wearing a red shirt and blue jeans' with a hat"
-          className="w-full h-32 px-4 py-3 border-2 border-candle-orange/30 rounded-xl resize-none focus:border-candle-orange focus:outline-none transition-colors duration-200 bg-white dark:bg-candle-dark text-candle-dark dark:text-candle-light placeholder-gray-400 dark:placeholder-gray-500"
+          className="w-full h-32 px-4 py-3 border-2 border-candle-orange/30 rounded-xl resize-none focus:border-candle-orange focus:outline-none transition-colors duration-200 bg-white dark:bg-candle-dark text-candle-dark dark:text-candle-light placeholder-gray-400 dark:placeholder-gray-500 font-ai"
         />
       </div>
 
@@ -127,7 +124,7 @@ export default function PromptBasedGenerator({ onTraitsGenerated, onGenerate }: 
       <button
         onClick={handleGenerateFromPrompt}
         disabled={isProcessing || !prompt.trim()}
-        className="w-full bg-gradient-to-r from-candle-orange via-candle-orange-light to-candle-orange-lighter text-white font-bold py-3 px-6 rounded-xl shadow-candle-glow hover:shadow-orange-glow transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:hover:scale-100"
+        className="w-full bg-gradient-to-r from-candle-orange via-candle-orange-light to-candle-orange-lighter text-white font-bold py-3 px-6 rounded-xl shadow-candle-glow hover:shadow-orange-glow transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:hover:scale-100 font-ai"
       >
         {isProcessing ? (
           <div className="flex items-center justify-center space-x-2">
@@ -147,7 +144,7 @@ export default function PromptBasedGenerator({ onTraitsGenerated, onGenerate }: 
         <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
           <div className="flex items-center space-x-2">
             <AlertCircle className="text-red-600 dark:text-red-400" size={20} />
-            <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+            <p className="text-red-600 dark:text-red-400 text-sm font-ai">{error}</p>
           </div>
         </div>
       )}
@@ -157,11 +154,11 @@ export default function PromptBasedGenerator({ onTraitsGenerated, onGenerate }: 
         <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4">
           <div className="flex items-center space-x-2 mb-3">
             <CheckCircle className="text-green-600 dark:text-green-400" size={20} />
-            <h4 className="font-semibold text-green-800 dark:text-green-200">Traits Generated Successfully!</h4>
+            <h4 className="font-semibold text-green-800 dark:text-green-200 font-ai">Traits Generated Successfully!</h4>
           </div>
           
           <div className="space-y-2">
-            <p className="text-sm text-green-700 dark:text-green-300">
+            <p className="text-sm text-green-700 dark:text-green-300 font-ai">
               AI extracted the following traits from your description:
             </p>
             <div className="flex flex-wrap gap-2">
@@ -178,7 +175,7 @@ export default function PromptBasedGenerator({ onTraitsGenerated, onGenerate }: 
 
           <button
             onClick={handleUseTraits}
-            className="mt-4 w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white font-medium py-2 px-4 rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-200 hover:scale-105"
+            className="mt-4 w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white font-medium py-2 px-4 rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-200 hover:scale-105 font-ai"
           >
             Use These Traits
           </button>
@@ -190,15 +187,15 @@ export default function PromptBasedGenerator({ onTraitsGenerated, onGenerate }: 
         <div className="flex items-start space-x-2">
           <Lightbulb className="text-candle-orange mt-1" size={20} />
           <div>
-            <h4 className="font-semibold text-candle-dark dark:text-white mb-2">Example prompts:</h4>
+            <h4 className="font-semibold text-candle-dark dark:text-white mb-2 font-ai">Example prompts:</h4>
             <div className="text-sm text-candle-dark dark:text-candle-light space-y-2">
-              <div className="p-2 bg-white dark:bg-candle-dark/50 rounded border border-candle-orange/20">
+              <div className="p-2 bg-white dark:bg-candle-dark/50 rounded border border-candle-orange/20 font-ai">
                 "A cheerful orange mascot with big blue eyes, wearing a red shirt and blue jeans"
               </div>
-              <div className="p-2 bg-white dark:bg-candle-dark/50 rounded border border-candle-orange/20">
+              <div className="p-2 bg-white dark:bg-candle-dark/50 rounded border border-candle-orange/20 font-ai">
                 "A sophisticated mascot with round glasses, a bow tie, and a hat"
               </div>
-              <div className="p-2 bg-white dark:bg-candle-dark/50 rounded border border-candle-orange/20">
+              <div className="p-2 bg-white dark:bg-candle-dark/50 rounded border border-candle-orange/20 font-ai">
                 "A sporty mascot with sunglasses, athletic wear, and sneakers"
               </div>
             </div>

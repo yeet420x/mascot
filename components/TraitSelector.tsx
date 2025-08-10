@@ -93,7 +93,7 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
 
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-bold text-candle-dark dark:text-white mb-4">Customize Your Mascot</h3>
+      <h3 className="text-xl font-bold text-candle-dark dark:text-white mb-4 font-ai">Customize Your Mascot</h3>
       
       {/* Category Tabs */}
       <div className="flex flex-wrap gap-2">
@@ -101,7 +101,7 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
           <button
             key={category.category}
             onClick={() => setActiveCategory(category.category)}
-            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 font-ai ${
               activeCategory === category.category
                 ? 'bg-gradient-to-r from-candle-orange to-candle-orange-light text-white shadow-candle-glow'
                 : 'bg-gray-100 dark:bg-candle-dark text-gray-700 dark:text-candle-light hover:bg-gray-200 dark:hover:bg-candle-dark/80 border border-gray-200 dark:border-candle-orange/20'
@@ -114,7 +114,7 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
 
       {/* Options for selected category */}
       <div className="space-y-4">
-        <h4 className="font-semibold text-candle-dark dark:text-white">
+        <h4 className="font-semibold text-candle-dark dark:text-white font-ai">
           {traitCategories.find(c => c.category === activeCategory)?.label}
         </h4>
         
@@ -136,7 +136,7 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
                     className="w-8 h-8 rounded-full border-2 border-gray-300 dark:border-candle-orange/30"
                     style={{ backgroundColor: option.color }}
                   />
-                  <span className="text-sm font-medium text-candle-dark dark:text-candle-light">
+                  <span className="text-sm font-medium text-candle-dark dark:text-candle-light font-ai">
                     {option.name}
                   </span>
                 </div>
@@ -147,7 +147,7 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
 
       {/* Quick Actions */}
       <div className="pt-4 border-t border-gray-200 dark:border-candle-orange/20">
-        <h4 className="font-semibold text-candle-dark dark:text-white mb-3">Quick Actions</h4>
+        <h4 className="font-semibold text-candle-dark dark:text-white mb-3 font-ai">Quick Actions</h4>
         <div className="flex gap-2">
           <button
             onClick={() => {
@@ -155,7 +155,7 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
                 onTraitChange(trait as TraitCategory, 'default')
               })
             }}
-            className="px-4 py-2 bg-gray-100 dark:bg-candle-dark text-gray-700 dark:text-candle-light rounded-lg hover:bg-gray-200 dark:hover:bg-candle-dark/80 transition-all duration-200 border border-gray-200 dark:border-candle-orange/20"
+            className="px-4 py-2 bg-gray-100 dark:bg-candle-dark text-gray-700 dark:text-candle-light rounded-lg hover:bg-gray-200 dark:hover:bg-candle-dark/80 transition-all duration-200 border border-gray-200 dark:border-candle-orange/20 font-ai"
           >
             Reset to Default
           </button>
@@ -169,7 +169,7 @@ export default function TraitSelector({ traits, onTraitChange }: TraitSelectorPr
               onTraitChange('shoes', 'default')
               onTraitChange('accessories', 'none')
             }}
-            className="px-4 py-2 bg-gradient-to-r from-candle-orange to-candle-orange-light text-white rounded-lg hover:from-candle-orange-light hover:to-candle-orange-lighter transition-all duration-200 shadow-candle-glow hover:shadow-orange-glow"
+            className="px-4 py-2 bg-gradient-to-r from-candle-orange to-candle-orange-light text-white rounded-lg hover:from-candle-orange-light hover:to-candle-orange-lighter transition-all duration-200 shadow-candle-glow hover:shadow-orange-glow font-ai"
           >
             Candle TV Theme
           </button>

@@ -26,11 +26,13 @@ module.exports = {
         'candle-gold': '#FFD700',
       },
       fontFamily: {
-        'candle': ['Inter', 'sans-serif'],
-        'logo': ['Playfair Display', 'serif'],
-        'fancy': ['Dancing Script', 'cursive'],
-        'modern': ['Poppins', 'sans-serif'],
-        'display': ['Abril Fatface', 'cursive'],
+        'candle': ['Sinethar', 'sans-serif'],
+        'logo': ['Rolling Beat', 'cursive'],
+        'fancy': ['Rolling Beat', 'cursive'],
+        'modern': ['Sinethar', 'sans-serif'],
+        'display': ['Sinethar', 'sans-serif'],
+        'header': ['Rolling Beat', 'cursive'],
+        'ai': ['Wasted-Vindey', 'cursive'],
       },
       backgroundImage: {
         'candle-gradient': 'linear-gradient(135deg, #FF6B35 0%, #FF8C42 25%, #FFA366 50%, #FFB366 75%, #FFE4D6 100%)',

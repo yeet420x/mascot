@@ -2,11 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+/* Sinethar font definitions */
+@font-face {
+  font-family: 'Sinethar';
+  src: url('./fonts/Sinethar.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Rolling Beat font definitions */
+@font-face {
+  font-family: 'Rolling Beat';
+  src: url('./fonts/Rolling Beat.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Wasted-Vindey font definitions */
+@font-face {
+  font-family: 'Wasted-Vindey';
+  src: url('./fonts/Wasted-Vindey.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 * {
   box-sizing: border-box;
@@ -18,7 +39,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sinethar), 'Sinethar', sans-serif;
 }
 
 body {
@@ -93,9 +114,21 @@ a {
   box-shadow: 0 5px 15px rgba(255, 140, 66, 0.3);
 }
 
+/* Header font styles */
+.header-text {
+  font-family: var(--font-rolling-beat), 'Rolling Beat', cursive;
+}
+
+/* AI Generation font styles - with higher specificity to prevent override */
+.ai-text,
+.font-ai,
+[class*="font-ai"] {
+  font-family: var(--font-wasted-vindey), 'Wasted-Vindey', cursive !important;
+}
+
 /* Logo styles */
 .logo-text {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-rolling-beat), 'Rolling Beat', cursive;
   background: linear-gradient(135deg, #FF6B35, #FF8C42, #FFA366, #FFB366);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -111,7 +144,7 @@ a {
 }
 
 .logo-fancy {
-  font-family: 'Dancing Script', cursive;
+  font-family: var(--font-rolling-beat), 'Rolling Beat', cursive;
   background: linear-gradient(135deg, #FF6B35, #FF8C42, #FFA366);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

@@ -21,24 +21,24 @@ interface AIImageGeneratorProps {
 }
 
 export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) {
+  const [activeTab, setActiveTab] = useState<'manual' | 'prompt'>('manual')
   const [traits, setTraits] = useState<MascotTraits>({
     head: 'default',
-    eyes: 'brown',
+    eyes: 'default',
     glasses: 'none',
-    shirt: 'orange',
-    pants: 'blue',
-    shoes: 'black',
+    shirt: 'default',
+    pants: 'default',
+    shoes: 'default',
     accessories: 'none',
-    background: '#F5F5DC',
+    background: 'default',
     hat: 'none',
     bowtie: 'none'
   })
-
   const [isGenerating, setIsGenerating] = useState(false)
-  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<'manual' | 'prompt'>('manual')
-  const [rpcUrl, setRpcUrl] = useState<string>('https://solana-mainnet.g.alchemy.com/v2/demo')
+  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null)
+  const [rpcUrl, setRpcUrl] = useState<string>('')
+  const [traitsGeneratedFromPrompt, setTraitsGeneratedFromPrompt] = useState(false)
 
   // Fetch RPC URL securely from server
   useEffect(() => {
@@ -102,6 +102,31 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
 
   const handleTraitsGenerated = (newTraits: MascotTraits) => {
     setTraits(newTraits)
+    setTraitsGeneratedFromPrompt(true)
+  }
+
+  // Check if user has provided enough input to enable generation
+  const canGenerate = () => {
+    if (activeTab === 'manual') {
+      // For manual selection, check if at least some traits are customized
+      const hasCustomTraits = Object.values(traits).some(value => 
+        value !== 'default' && value !== 'none'
+      )
+      return hasCustomTraits
+    } else {
+      // For AI prompt, check if traits were generated from a prompt
+      return traitsGeneratedFromPrompt
+    }
+  }
+
+  const handleTabSwitch = (tab: 'manual' | 'prompt') => {
+    setActiveTab(tab)
+    if (tab === 'manual') {
+      setTraitsGeneratedFromPrompt(false)
+    } else {
+      // When switching to prompt tab, reset the state since user needs to generate traits again
+      setTraitsGeneratedFromPrompt(false)
+    }
   }
 
   const getConnection = () => {
@@ -123,22 +148,22 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-8">
-      {/* Enhanced Header Section */}
-      <div className="text-center space-y-4">
-        <h2 className="text-4xl font-bold logo-text dark:text-white">
+    <div className="max-w-7xl mx-auto px-4 py-12 space-y-8">
+      {/* Main Title */}
+      <div className="text-center">
+        <h2 className="text-4xl md:text-5xl font-bold text-candle-dark dark:text-white mb-4 font-ai">
           Create Your Mascot
         </h2>
-        <p className="text-lg text-candle-orange-light dark:text-candle-orange-lighter font-fancy">
-          Design the perfect Candle TV mascot with our AI-powered generator
+        <p className="text-lg text-candle-dark/80 dark:text-white/80 max-w-2xl mx-auto">
+          Choose between manual trait selection or AI-powered generation to create your unique Candle TV mascot
         </p>
       </div>
 
       {/* Tab Navigation */}
       <div className="flex justify-center space-x-2">
         <button
-          onClick={() => setActiveTab('manual')}
-          className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+          onClick={() => handleTabSwitch('manual')}
+          className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 font-ai ${
             activeTab === 'manual'
               ? 'bg-gradient-to-r from-candle-orange to-candle-orange-light text-white shadow-candle-glow'
               : 'bg-white dark:bg-candle-dark text-candle-orange border-2 border-candle-orange hover:bg-candle-orange hover:text-white'
@@ -147,8 +172,8 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
           Manual Selection
         </button>
         <button
-          onClick={() => setActiveTab('prompt')}
-          className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+          onClick={() => handleTabSwitch('prompt')}
+          className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 font-ai ${
             activeTab === 'prompt'
               ? 'bg-gradient-to-r from-candle-orange to-candle-orange-light text-white shadow-candle-glow'
               : 'bg-white dark:bg-candle-dark text-candle-orange border-2 border-candle-orange hover:bg-candle-orange hover:text-white'
@@ -164,7 +189,7 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
         <div className="space-y-6">
           {activeTab === 'manual' ? (
             <div className="bg-white dark:bg-candle-dark rounded-2xl p-6 shadow-lg dark:shadow-dark-elegant border border-candle-orange/20">
-              <h3 className="text-2xl font-bold text-candle-dark dark:text-white mb-4 flex items-center space-x-2">
+              <h3 className="text-2xl font-bold text-candle-dark dark:text-white mb-4 flex items-center space-x-2 font-ai">
                 <MessageSquare className="text-candle-orange" size={24} />
                 <span>Customize Your Mascot</span>
               </h3>
@@ -183,18 +208,39 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
           <div className="bg-white dark:bg-candle-dark rounded-2xl p-6 shadow-lg dark:shadow-dark-elegant border border-candle-orange/20">
             <button
               onClick={handleGenerate}
-              disabled={isGenerating}
-              className="w-full bg-gradient-to-r from-candle-orange via-candle-orange-light to-candle-orange-lighter text-white font-bold py-4 px-6 rounded-xl shadow-candle-glow hover:shadow-orange-glow transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              disabled={isGenerating || !canGenerate()}
+              className={`w-full font-bold py-4 px-6 rounded-xl transition-all duration-300 font-ai ${
+                canGenerate() && !isGenerating
+                  ? 'bg-gradient-to-r from-candle-orange via-candle-orange-light to-candle-orange-lighter text-white shadow-candle-glow hover:shadow-orange-glow hover:scale-105'
+                  : 'bg-gray-400 dark:bg-gray-600 text-gray-200 dark:text-gray-300 cursor-not-allowed opacity-60'
+              }`}
             >
               {isGenerating ? (
                 <div className="flex items-center justify-center space-x-2">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
                   <span>Generating...</span>
                 </div>
+              ) : !canGenerate() ? (
+                <span className="text-lg">
+                  {activeTab === 'manual' 
+                    ? 'Select traits to generate' 
+                    : 'Write a prompt to generate traits'
+                  }
+                </span>
               ) : (
                 <span className="text-lg">Generate Mascot</span>
               )}
             </button>
+            
+            {/* Helpful message */}
+            {!canGenerate() && (
+              <p className="mt-3 text-sm text-gray-600 dark:text-gray-400 text-center">
+                {activeTab === 'manual' 
+                  ? 'Customize at least one trait above to enable generation'
+                  : 'Write a description and generate traits to enable generation'
+                }
+              </p>
+            )}
           </div>
 
           {/* Error Display */}
@@ -207,7 +253,7 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
           {/* Generated Image Display */}
           {generatedImageUrl && (
             <div className="bg-white dark:bg-candle-dark rounded-2xl p-6 shadow-lg dark:shadow-dark-elegant border border-candle-orange/20">
-              <h3 className="text-xl font-bold text-candle-dark dark:text-white mb-4">Generated Mascot</h3>
+              <h3 className="text-xl font-bold text-candle-dark dark:text-white mb-4 font-ai">Generated Mascot</h3>
               <div className="space-y-4">
                 <img
                   src={generatedImageUrl}
@@ -223,7 +269,7 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
 
       {/* Saved Mascots Section */}
       <div className="bg-white dark:bg-candle-dark rounded-2xl p-6 shadow-lg dark:shadow-dark-elegant border border-candle-orange/20">
-        <h3 className="text-2xl font-bold text-candle-dark dark:text-white mb-4">Saved Mascots</h3>
+        <h3 className="text-2xl font-bold text-candle-dark dark:text-white mb-4 font-ai">Saved Mascots</h3>
         <SavedMascots
           savedMascots={[]}
           onLoadMascot={() => {}}

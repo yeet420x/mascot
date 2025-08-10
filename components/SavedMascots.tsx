@@ -43,7 +43,7 @@ export default function SavedMascots({ savedMascots, onLoadMascot, onDeleteMasco
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
           </svg>
         </div>
-        <h3 className="text-lg font-semibold text-gray-600 mb-2">No Saved Mascots</h3>
+        <h3 className="text-lg font-semibold text-gray-600 mb-2 font-ai">No Saved Mascots</h3>
         <p className="text-gray-500">Create and save your first mascot to see it here!</p>
       </div>
     )
@@ -51,7 +51,7 @@ export default function SavedMascots({ savedMascots, onLoadMascot, onDeleteMasco
 
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-bold text-candle-dark">Saved Mascots</h3>
+      <h3 className="text-xl font-bold text-candle-dark font-ai">Saved Mascots</h3>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {savedMascots.map((mascot) => (
@@ -62,7 +62,7 @@ export default function SavedMascots({ savedMascots, onLoadMascot, onDeleteMasco
             {/* Mascot Preview */}
             <div className="flex justify-center mb-3">
               <div className="w-24 h-24 bg-candle-light rounded-full flex items-center justify-center border-2 border-candle-orange">
-                <span className="text-candle-orange font-bold text-lg">
+                <span className="text-candle-orange font-bold text-lg font-ai">
                   {mascot.name.charAt(0).toUpperCase()}
                 </span>
               </div>
@@ -70,7 +70,7 @@ export default function SavedMascots({ savedMascots, onLoadMascot, onDeleteMasco
             
             {/* Mascot Info */}
             <div className="text-center mb-4">
-              <h4 className="font-semibold text-candle-dark mb-1">
+              <h4 className="font-semibold text-candle-dark mb-1 font-ai">
                 {mascot.name || 'Unnamed Mascot'}
               </h4>
               <p className="text-sm text-gray-600">
@@ -82,7 +82,7 @@ export default function SavedMascots({ savedMascots, onLoadMascot, onDeleteMasco
             <div className="flex justify-center space-x-2">
               <button
                 onClick={() => onLoadMascot(mascot)}
-                className="flex items-center space-x-1 px-3 py-1 bg-candle-orange text-white rounded text-sm hover:bg-candle-accent transition-colors"
+                className="flex items-center space-x-1 px-3 py-1 bg-candle-orange text-white rounded text-sm hover:bg-candle-accent transition-colors font-ai"
                 title="Load Mascot"
               >
                 <Eye size={14} />
@@ -91,7 +91,7 @@ export default function SavedMascots({ savedMascots, onLoadMascot, onDeleteMasco
               
               <button
                 onClick={() => downloadMascot(mascot)}
-                className="flex items-center space-x-1 px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 transition-colors"
+                className="flex items-center space-x-1 px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 transition-colors font-ai"
                 title="Download Mascot"
               >
                 <Download size={14} />
@@ -100,7 +100,7 @@ export default function SavedMascots({ savedMascots, onLoadMascot, onDeleteMasco
               
               <button
                 onClick={() => onDeleteMascot(mascot.id!)}
-                className="flex items-center space-x-1 px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600 transition-colors"
+                className="flex items-center space-x-1 px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600 transition-colors font-ai"
                 title="Delete Mascot"
               >
                 <Trash2 size={14} />
@@ -114,13 +114,13 @@ export default function SavedMascots({ savedMascots, onLoadMascot, onDeleteMasco
       {/* Bulk Actions */}
       {savedMascots.length > 1 && (
         <div className="pt-4 border-t border-gray-200">
-          <h4 className="font-semibold text-candle-dark mb-3">Bulk Actions</h4>
+          <h4 className="font-semibold text-candle-dark mb-3 font-ai">Bulk Actions</h4>
           <div className="flex gap-2">
             <button
               onClick={() => {
                 savedMascots.forEach(mascot => downloadMascot(mascot))
               }}
-              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-sm"
+              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-sm font-ai"
             >
               Download All
             </button>
@@ -130,7 +130,7 @@ export default function SavedMascots({ savedMascots, onLoadMascot, onDeleteMasco
                   savedMascots.forEach(mascot => onDeleteMascot(mascot.id!))
                 }
               }}
-              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm"
+              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-ai"
             >
               Delete All
             </button>
