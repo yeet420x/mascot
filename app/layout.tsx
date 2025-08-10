@@ -3,9 +3,9 @@ import localFont from 'next/font/local'
 import './globals.css'
 import { DynamicWalletProvider } from '../components/DynamicWalletProvider'
 
-const sinethar = localFont({
-  src: './fonts/Sinethar.otf',
-  variable: '--font-sinethar',
+const metropolis = localFont({
+  src: './fonts/Metropolis-Black.otf',
+  variable: '--font-metropolis',
   display: 'swap',
 })
 
@@ -34,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${sinethar.variable} ${rollingBeat.variable} ${wastedVindey.variable}`}>
+      <body className={`${metropolis.variable} ${rollingBeat.variable} ${wastedVindey.variable}`}>
         <DynamicWalletProvider>
           <div className="min-h-screen transition-all duration-300">
             {children}
