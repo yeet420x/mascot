@@ -15,7 +15,7 @@ export default function SavedMascots({ onLoadMascot, onDeleteMascot }: SavedMasc
   const [error, setError] = useState<string | null>(null)
   const [selectedMascot, setSelectedMascot] = useState<MascotData | null>(null)
   const [zoomedMascot, setZoomedMascot] = useState<MascotData | null>(null)
-  const [debugInfo, setDebugInfo] = useState<any>(null)
+
 
   const fetchMascots = async () => {
     try {
@@ -32,7 +32,6 @@ export default function SavedMascots({ onLoadMascot, onDeleteMascot }: SavedMasc
       const data = await response.json()
       if (data.success) {
         setMascots(data.mascots)
-        setDebugInfo(data.debug || null)
       } else {
         throw new Error(data.error || 'Failed to fetch mascots from Shadow Drive')
       }
@@ -289,20 +288,7 @@ export default function SavedMascots({ onLoadMascot, onDeleteMascot }: SavedMasc
         </div>
       )}
       
-      {/* Debug Information */}
-      {debugInfo && (
-        <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h4 className="font-semibold text-gray-700 dark:text-gray-300 mb-2 font-ai">Debug Info</h4>
-          <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
-            <p><strong>Storage Account:</strong> {debugInfo.storageAccount}</p>
-            <p><strong>Total Files:</strong> {debugInfo.totalFiles}</p>
-            <p><strong>File Names:</strong> {debugInfo.fileNames?.slice(0, 10).join(', ')}</p>
-            {debugInfo.fileNames && debugInfo.fileNames.length > 10 && (
-              <p className="text-gray-500">... and {debugInfo.fileNames.length - 10} more files</p>
-            )}
-          </div>
-        </div>
-      )}
+
     </div>
   )
 } 
