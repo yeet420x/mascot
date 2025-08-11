@@ -16,6 +16,7 @@ module.exports = {
         'display': ['Metropolis', 'sans-serif'],
         'header': ['Rolling Beat', 'cursive'],
         'ai': ['Wasted-Vindey', 'cursive'], // New font for AI section
+        'bangers': ['Bangers', 'cursive'], // New Bangers font for logo
       },
       colors: {
         'candle-orange': '#D84315', // Darker orange

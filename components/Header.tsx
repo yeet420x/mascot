@@ -25,8 +25,8 @@ export default function Header() {
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-candle-orange/20 to-candle-orange-light/20 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               
-              {/* Logo letter with fancy font */}
-              <span className="relative z-10 text-white font-display text-3xl font-bold tracking-wider animate-logo-float">
+              {/* Logo letter with Bangers font */}
+              <span className="relative z-10 text-white font-bangers text-4xl font-bold tracking-wider animate-logo-float">
                 C
               </span>
               
@@ -100,7 +100,7 @@ export default function Header() {
             <div className="flex items-center space-x-3">
               {/* Smaller Logo for Mobile */}
               <div className="relative w-12 h-12 bg-gradient-to-br from-candle-orange via-candle-orange-light to-candle-orange-lighter rounded-xl flex items-center justify-center shadow-candle-glow">
-                <span className="relative z-10 text-white font-display text-2xl font-bold tracking-wider">
+                <span className="relative z-10 text-white font-bangers text-3xl font-bold tracking-wider">
                   C
                 </span>
               </div>
