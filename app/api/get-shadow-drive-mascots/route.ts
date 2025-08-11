@@ -115,23 +115,28 @@ export async function GET(request: NextRequest) {
             const metadata = await response.json()
             console.log('📄 File content:', JSON.stringify(metadata, null, 2))
             
-            // Extract mascot information - be more flexible with the structure
-            const mascot = {
-              id: fileName.replace(/\.json$/, '').replace(/^.*?(\d+).*$/, '$1') || Date.now().toString(),
-              name: metadata.name || metadata.title || 'Unnamed Mascot',
-              description: metadata.description || '',
-              imageUrl: metadata.image || metadata.imageUrl || null,
-              traits: metadata.attributes || metadata.traits || [],
-              createdAt: metadata.attributes?.find((attr: any) => attr.trait_type === 'Generated At')?.value || 
-                        metadata.createdAt || 
-                        metadata.created_at || 
-                        new Date().toISOString(),
-              metadata: metadata,
-              fileUrl: fileUrl
+            // Check if this is actually a mascot metadata file
+            if (metadata.name && metadata.name.includes('Candle Mascot')) {
+              // Extract mascot information - be more flexible with the structure
+              const mascot = {
+                id: fileName.replace(/\.json$/, '').replace(/^.*?(\d+).*$/, '$1') || Date.now().toString(),
+                name: metadata.name || metadata.title || 'Unnamed Mascot',
+                description: metadata.description || '',
+                imageUrl: metadata.image || metadata.imageUrl || null,
+                traits: metadata.attributes || metadata.traits || [],
+                createdAt: metadata.attributes?.find((attr: any) => attr.trait_type === 'Generated At')?.value || 
+                          metadata.createdAt || 
+                          metadata.created_at || 
+                          new Date().toISOString(),
+                metadata: metadata,
+                fileUrl: fileUrl
+              }
+              
+              mascots.push(mascot)
+              console.log('✅ Processed mascot:', mascot.name)
+            } else {
+              console.log('⚠️ Skipping file - not a mascot metadata:', fileName)
             }
-            
-            mascots.push(mascot)
-            console.log('✅ Processed mascot:', mascot.name)
           } else {
             console.warn('⚠️ Failed to fetch file:', fileName, response.status, response.statusText)
           }
