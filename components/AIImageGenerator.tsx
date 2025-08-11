@@ -267,13 +267,33 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
         </div>
       </div>
 
-      {/* Saved Mascots Section */}
+      {/* All Generated Mascots Section */}
       <div className="bg-white dark:bg-candle-dark rounded-2xl p-6 shadow-lg dark:shadow-dark-elegant border border-candle-orange/20">
-        <h3 className="text-2xl font-bold text-candle-dark dark:text-white mb-4 font-ai">Saved Mascots</h3>
         <SavedMascots
-          savedMascots={[]}
-          onLoadMascot={() => {}}
-          onDeleteMascot={() => {}}
+          onLoadMascot={(mascot) => {
+            // Load the mascot traits into the trait selector
+            if (mascot.traits && Array.isArray(mascot.traits)) {
+              // Handle Shadow Drive traits format (attributes array)
+              const traitMap: any = {}
+              mascot.traits.forEach((attr: any) => {
+                if (attr.trait_type && attr.value) {
+                  traitMap[attr.trait_type.toLowerCase()] = attr.value
+                }
+              })
+              if (Object.keys(traitMap).length > 0) {
+                setTraits(traitMap)
+              }
+            } else if (mascot.traits && typeof mascot.traits === 'object') {
+              // Handle Supabase traits format (direct object)
+              setTraits(mascot.traits)
+            }
+            // Set the generated image if available
+            if (mascot.imageUrl) {
+              setGeneratedImageUrl(mascot.imageUrl)
+            }
+            // Switch to manual tab to show the loaded traits
+            setActiveTab('manual')
+          }}
         />
       </div>
     </div>

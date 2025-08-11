@@ -16,8 +16,12 @@ export interface MascotTraits {
 export interface MascotData {
   id?: string
   name: string
-  traits: MascotTraits
+  traits: MascotTraits | any[]
   imageUrl?: string
+  description?: string
+  createdAt?: string
+  metadata?: any
+  fileUrl?: string
 }
 
 export interface TraitOption {
