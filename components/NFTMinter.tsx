@@ -13,9 +13,10 @@ import { useState } from 'react'
 interface NFTMinterProps {
   imageUrl: string
   description?: string
+  traits?: any
 }
 
-export default function NFTMinter({ imageUrl, description = 'AI-Generated Candle TV Mascot' }: NFTMinterProps) {
+export default function NFTMinter({ imageUrl, description = 'AI-Generated Candle TV Mascot', traits }: NFTMinterProps) {
   const { publicKey: walletPubkey, signTransaction } = useWallet()
   const { connection } = useConnection()
   const [isLoading, setIsLoading] = useState(false)
@@ -45,6 +46,7 @@ export default function NFTMinter({ imageUrl, description = 'AI-Generated Candle
             description,
             name: `mascot-${Date.now()}`,
             walletAddress: walletPubkey?.toString(),
+            traits,
           }),
         })
 

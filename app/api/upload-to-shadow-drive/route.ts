@@ -4,7 +4,7 @@ import { ShdwDrive } from '@shadow-drive/sdk'
 import bs58 from 'bs58'
 import nacl from 'tweetnacl'
 
-const STORAGE_ACCOUNT_ADDRESS = 'WW5T5VEbE4GSc5Rcimo4nA9voAr7pSwqy4VswEUqWh4'
+const STORAGE_ACCOUNT_ADDRESS = '9ZtxtPqwbZNP8x9Sc8JpycjuVPiaT2DqBomXxYsXgVEU'
 
 export async function POST(request: NextRequest) {
   console.log('🔄 Shadow Drive Upload API called')
@@ -12,12 +12,13 @@ export async function POST(request: NextRequest) {
   
   try {
     console.log('📥 Parsing request body...')
-    const { imageUrl, description, walletAddress } = await request.json()
+    const { imageUrl, description, walletAddress, traits } = await request.json()
     
     console.log('🔍 Validating required fields...')
     console.log('Image URL:', imageUrl)
     console.log('Description:', description)
     console.log('Wallet Address:', walletAddress)
+    console.log('Traits:', traits)
 
     if (!imageUrl || !description || !walletAddress) {
       console.error('❌ Missing required fields')
@@ -38,25 +39,49 @@ export async function POST(request: NextRequest) {
     
     // Create NFT metadata structure
     console.log('📝 Creating NFT metadata structure...')
+    
+    // Create a comprehensive description
+    const mascotDescription = traits ? 
+      `Candle TV Mascot with traits: ${JSON.stringify(traits)}` :
+      description
+    
+    // Create attributes array with all traits
+    const attributes = []
+    
+    // Add basic info
+    attributes.push(
+      {
+        trait_type: 'Type',
+        value: 'AI Generated'
+      },
+      {
+        trait_type: 'Collection',
+        value: 'Candle Mascots'
+      },
+      {
+        trait_type: 'Generated At',
+        value: new Date().toISOString()
+      }
+    )
+    
+    // Add all mascot traits if available
+    if (traits && typeof traits === 'object') {
+      Object.entries(traits).forEach(([key, value]) => {
+        if (value && value !== 'none' && value !== 'default') {
+          attributes.push({
+            trait_type: key.charAt(0).toUpperCase() + key.slice(1),
+            value: value
+          })
+        }
+      })
+    }
+    
     const metadata = {
       name: `Candle Mascot #${Date.now()}`,
       symbol: 'CANDLE',
-      description: description,
+      description: mascotDescription,
       image: imageUrl,
-      attributes: [
-        {
-          trait_type: 'Type',
-          value: 'AI Generated'
-        },
-        {
-          trait_type: 'Collection',
-          value: 'Candle Mascots'
-        },
-        {
-          trait_type: 'Generated At',
-          value: new Date().toISOString()
-        }
-      ],
+      attributes: attributes,
       properties: {
         files: [
           {

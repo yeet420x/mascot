@@ -260,7 +260,11 @@ export default function AIImageGenerator({ onGenerate }: AIImageGeneratorProps) 
                   alt="Generated mascot"
                   className="w-full h-auto rounded-xl border-2 border-candle-orange/30"
                 />
-                <NFTMinter imageUrl={generatedImageUrl} />
+                <NFTMinter 
+                  imageUrl={generatedImageUrl} 
+                  traits={traits}
+                  description={`AI-Generated Candle TV Mascot with ${Object.values(traits).filter(v => v && v !== 'none' && v !== 'default').length} custom traits`}
+                />
               </div>
             </div>
           )}

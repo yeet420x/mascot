@@ -21,34 +21,22 @@ export default function SavedMascots({ onLoadMascot, onDeleteMascot }: SavedMasc
       setLoading(true)
       setError(null)
       
-      // Try Shadow Drive first, fallback to Supabase if needed
-      let response = await fetch('/api/get-shadow-drive-mascots')
-      let data
+      // Fetch mascots from Shadow Drive only
+      const response = await fetch('/api/get-shadow-drive-mascots')
       
-      if (response.ok) {
-        data = await response.json()
-        if (data.success) {
-          setMascots(data.mascots)
-          return
-        }
-      }
-      
-      // Fallback to Supabase if Shadow Drive fails
-      console.log('🔄 Shadow Drive failed, trying Supabase...')
-      response = await fetch('/api/get-all-mascots')
       if (!response.ok) {
-        throw new Error('Failed to fetch mascots from both sources')
+        throw new Error(`Failed to fetch mascots: ${response.status} ${response.statusText}`)
       }
       
-      data = await response.json()
+      const data = await response.json()
       if (data.success) {
         setMascots(data.mascots)
       } else {
-        throw new Error(data.error || 'Failed to fetch mascots')
+        throw new Error(data.error || 'Failed to fetch mascots from Shadow Drive')
       }
     } catch (err) {
       console.error('Error fetching mascots:', err)
-      setError(err instanceof Error ? err.message : 'Failed to fetch mascots')
+      setError(err instanceof Error ? err.message : 'Failed to fetch mascots from Shadow Drive')
     } finally {
       setLoading(false)
     }
@@ -108,7 +96,7 @@ export default function SavedMascots({ onLoadMascot, onDeleteMascot }: SavedMasc
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h3 className="text-xl font-bold text-candle-dark font-ai">All Generated Mascots (View Only)</h3>
+        <h3 className="text-xl font-bold text-candle-dark font-ai">Shadow Drive Mascot Gallery</h3>
         <button
           onClick={fetchMascots}
           className="flex items-center space-x-2 px-3 py-2 bg-candle-orange text-white rounded-lg hover:bg-candle-accent transition-colors font-ai"
@@ -117,6 +105,14 @@ export default function SavedMascots({ onLoadMascot, onDeleteMascot }: SavedMasc
           <RefreshCw size={16} />
           <span>Refresh</span>
         </button>
+      </div>
+      
+      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+        <p className="text-blue-700 dark:text-blue-300 text-sm text-center">
+          🖼️ This gallery shows all mascots stored on Shadow Drive for viewing purposes only. 
+          <br />
+          <span className="font-semibold">Mascots cannot be regenerated or minted as new NFTs.</span>
+        </p>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -164,15 +160,6 @@ export default function SavedMascots({ onLoadMascot, onDeleteMascot }: SavedMasc
             
             {/* Actions */}
             <div className="flex justify-center space-x-2">
-              <button
-                onClick={() => onLoadMascot(mascot)}
-                className="flex items-center space-x-1 px-3 py-1 bg-candle-orange text-white rounded text-sm hover:bg-candle-accent transition-colors font-ai"
-                title="Load Mascot"
-              >
-                <Eye size={14} />
-                <span>Load</span>
-              </button>
-              
               {mascot.imageUrl && (
                 <button
                   onClick={() => zoomMascot(mascot)}
@@ -275,12 +262,11 @@ export default function SavedMascots({ onLoadMascot, onDeleteMascot }: SavedMasc
             
             {/* Modal Footer */}
             <div className="flex justify-center p-6 border-t border-gray-200 dark:border-gray-700">
-              <button
-                onClick={() => onLoadMascot(zoomedMascot)}
-                className="px-6 py-3 bg-candle-orange text-white rounded-lg hover:bg-candle-accent transition-colors font-ai"
-              >
-                Load This Mascot
-              </button>
+              <p className="text-gray-500 dark:text-gray-400 text-sm text-center">
+                This mascot has already been generated and stored. 
+                <br />
+                <span className="text-candle-orange font-semibold">View only - no regeneration allowed.</span>
+              </p>
             </div>
           </div>
         </div>

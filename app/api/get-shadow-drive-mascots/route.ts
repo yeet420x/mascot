@@ -4,7 +4,7 @@ import { ShdwDrive } from '@shadow-drive/sdk'
 import bs58 from 'bs58'
 import nacl from 'tweetnacl'
 
-const STORAGE_ACCOUNT_ADDRESS = 'WW5T5VEbE4GSc5Rcimo4nA9voAr7pSwqy4VswEUqWh4'
+const STORAGE_ACCOUNT_ADDRESS = '9ZtxtPqwbZNP8x9Sc8JpycjuVPiaT2DqBomXxYsXgVEU'
 
 export async function GET(request: NextRequest) {
   console.log('🔄 Shadow Drive Mascots API called')
